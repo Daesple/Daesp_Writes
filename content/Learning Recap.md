@@ -19,7 +19,7 @@ _Mục tiêu: Biết vẽ map, tạo nhân vật, cho họ nói chuyện và di 
 	- **Did:** Vẽ map đầu tiên bằng các map editor và tileset sẵn có của RPG Maker![[Pasted image 20260808153735.png]]<p align="center"><i>*Bùa nhanh 2 phút*</i></p>
 	- **The Opinionated engine:** Hệ thống tilesets đa dạng, làm sẵn, tự động hóa, dễ dùng. Nhanh gọn nhưng bị gò bó (không hẳn là điểm trừ vì nó chỉ bị gò bó khi đang muốn làm những thể loại game khác, góc nhìn khác, còn với JRPG thì không có gì để chê)
 	- **Cons:** Mới đầu hơi overwhelm![[Pasted image 20260808154252.png]]
-	- **Final Report:** Nguyên liệu cho [[Map Editor Evaluation]]  ^891d1b
+	- **Final Report:** Nguyên liệu cho [[content/Map Editor Evaluation]]  ^891d1b
 
 2. **SomeRanDev - Tut #2: Creating an NPC!**: Tạo sự kiện, dùng lệnh _Show Text_ cho nhân vật nói chuyện. ^0156e2
 	- **Did:** Tạo một NPC bằng event, tạo tương tác dialogue đơn giản![[PixPin_2026-08-08_16-07-50.webp]]

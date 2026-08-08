@@ -7,7 +7,7 @@
 [[An Opinionated Engine]]
 
 # 3. The Map Editor: Dream of every game maker?
-[[Map_Editor_Evaluation]]
+[[content/RMMV_Documentary/1. Design_Reflection/Map Editor Evaluation]]
 
 # 4. Core Architecture: Event-Driven Design & Composable Actions
 [[Event-Driven Design in RMMV]] 
