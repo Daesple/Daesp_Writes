@@ -1,3 +1,10 @@
+
+[[Learning Recap#^891d1b]]
+
+
+
+
+---
 ## Điểm cộng
 - Tiện lợi
 - Tự động hóa

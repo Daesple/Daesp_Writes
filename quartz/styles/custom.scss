@@ -1,3 +1,153 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+// Typography overrides
+:root {
+  --headerFont: "Shantell Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --bodyFont: "Shantell Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-text: var(--bodyFont);
+  --font-interface: var(--bodyFont);
+  --font-heading: var(--headerFont);
+}
+
+body,
+p,
+li,
+a,
+span,
+div {
+  font-family: var(--bodyFont);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.article-title {
+  font-family: var(--headerFont) !important;
+  font-weight: 700;
+}
+
+// ==========================================
+// 🕸️ Obsidian-Style Graph View UX/UI
+// ==========================================
+.graph {
+  margin-top: 1rem;
+
+  & > h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 0.6rem;
+    font-family: var(--headerFont) !important;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--secondary);
+      box-shadow: 0 0 8px var(--secondary);
+    }
+  }
+
+  & > .graph-outer {
+    border-radius: 12px;
+    border: 1px solid var(--lightgray);
+    background-color: var(--light);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), inset 0 0 20px rgba(0, 0, 0, 0.02);
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    &:hover {
+      border-color: var(--secondary);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), inset 0 0 25px rgba(0, 0, 0, 0.03);
+
+      & > .global-graph-icon {
+        opacity: 0.85;
+      }
+    }
+
+    & > .global-graph-icon {
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 28px;
+      height: 28px;
+      padding: 0.3rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      color: var(--darkgray);
+      background-color: color-mix(in srgb, var(--light) 80%, transparent);
+      backdrop-filter: blur(4px);
+      opacity: 0.5;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        opacity: 1;
+        color: var(--secondary);
+        border-color: var(--lightgray);
+        background-color: var(--light);
+        transform: scale(1.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  // Global Graph Modal (Obsidian-Style Fullscreen Canvas)
+  & > .global-graph-outer {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(0, 0, 0, 0.6);
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    & > .global-graph-container {
+      border-radius: 18px;
+      border: 1px solid color-mix(in srgb, var(--lightgray) 80%, var(--secondary) 20%);
+      background-color: var(--light);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 85vh;
+      width: 85vw;
+      overflow: hidden;
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
+
+      &::after {
+        content: "Ctrl + G / ESC to close";
+        position: absolute;
+        bottom: 1rem;
+        right: 1.2rem;
+        font-size: 0.75rem;
+        color: var(--gray);
+        background: color-mix(in srgb, var(--light) 85%, transparent);
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        border: 1px solid var(--lightgray);
+        pointer-events: none;
+        letter-spacing: 0.03em;
+        font-family: var(--codeFont);
+      }
+    }
+  }
+}
+
+
