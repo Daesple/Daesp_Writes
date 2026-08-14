@@ -13,49 +13,86 @@
 
 ### PHẦN 1: LÀM QUEN CƠ BẢN
 
-_Mục tiêu: Biết vẽ map, tạo nhân vật, cho họ nói chuyện và di chuyển cơ bản._
+*Mục tiêu: Biết vẽ map, tạo nhân vật, cho họ nói chuyện và di chuyển cơ bản.*
 
 1. **SomeRanDev - Tut #1: Drawing The Map!:** Tạo Project, vọc Tileset và vẽ bản đồ. 
-	- **Did:** Vẽ map đầu tiên bằng các map editor và tileset sẵn có của RPG Maker![[Pasted image 20260808153735.png]]<p align="center"><i>*Bùa nhanh 2 phút*</i></p>
+	- **Did:** Vẽ map đầu tiên bằng các map editor và tileset sẵn có của RPG Maker![[assets/Pasted image 20260808153735.png]]<p align="center"><i>*Bùa nhanh 2 phút*</i></p>
 	- **The Opinionated engine:** Hệ thống tilesets đa dạng, làm sẵn, tự động hóa, dễ dùng. Nhanh gọn nhưng bị gò bó (không hẳn là điểm trừ vì nó chỉ bị gò bó khi đang muốn làm những thể loại game khác, góc nhìn khác, còn với JRPG thì không có gì để chê)
-	- **Cons:** Mới đầu hơi overwhelm![[Pasted image 20260808154252.png]]
-	- **Final Report:** Nguyên liệu cho [[content/Map Editor Evaluation]]  ^891d1b
+	- **Cons:** Mới đầu hơi overwhelm![[assets/Pasted image 20260808154252.png]]
+	- **Final Report:** Nguyên liệu cho [[Map Editor Evaluation]]  ^891d1b
 
 2. **SomeRanDev - Tut #2: Creating an NPC!**: Tạo sự kiện, dùng lệnh _Show Text_ cho nhân vật nói chuyện. ^0156e2
-	- **Did:** Tạo một NPC bằng event, tạo tương tác dialogue đơn giản![[PixPin_2026-08-08_16-07-50.webp]]
+	- **Did:** Tạo một NPC bằng event, tạo tương tác dialogue đơn giản![[assets/PixPin_2026-08-08_16-07-50.webp]]
 	- **Pros:** Mới vọc vạch làm quen nên chưa rõ, nhưng thấy làm quen cũng nhanh. Nếu quen rồi chắc có thể làm được nhiều thứ hay ho với các Event commands này.
-	- **Cons:** Dễ lọt hố và overwhelm (like me in this whole week - i try to learn all the commands 😭). Và liệu nó có thể custom được đến đâu? hay chỉ bị giới hạn trong những command cho trước (hình như có thể dùng script và plugin trong đây, nhưng chưa xem tới)![[Pasted image 20260808161115.png]]
-	![[Pasted image 20260808161828.png]]
+	- **Cons:** Dễ lọt hố và overwhelm (like me in this whole week - i try to learn all the commands 😭). Và liệu nó có thể custom được đến đâu? hay chỉ bị giới hạn trong những command cho trước (hình như có thể dùng script và plugin trong đây, nhưng chưa xem tới)![[assets/Pasted image 20260808161115.png]]
+	![[assets/Pasted image 20260808161828.png]]
 
 	 - **Final report:** Nguyên liệu cho [[Event-Driven Design in RMMV]]
 
 3. **SomeRanDev - Tut #3: Moving to other Maps!**: Học cách làm sự kiện truyền tống (Transfer Player) để đi từ map này sang map khác. ^4022be
-	-  **Did:** Tạp map mới "Làng Tân Thủ", và thiết lập sự kiện transfer qua lại.![[Pasted image 20260808171549.png]]
-		![[PixPin_2026-08-08_17-17-27.webp]]
-		![[Pasted image 20260808174316.png]]
+	-  **Did:** Tạp map mới "Làng Tân Thủ", và thiết lập sự kiện transfer qua lại.![[assets/Pasted image 20260808171549.png]]
+		![[assets/PixPin_2026-08-08_17-17-27.webp]]
+		![[assets/Pasted image 20260808174316.png]]
 	
 	- **Cons:** Tạo transfer event thủ công thì không có SE (Sound effect), còn dùng rightclick -> QuickEvent Creation -> Transfer player thì lại có SE. Ở địa hình không same level với character (Đồi núi, không thể bước đè lên được, thì phải nhớ chuyển Priority của địa hình đó sang "Same as characters" và chuyển Trigger từ "Player touch" sang "Action Button")
 	- **Final report:** Nguyên liệu cho [[Event-Driven Design in RMMV]]
 
 4. **SomeRanDev - Tut #4: Making NPCs Move!**: Học cách cho nhân vật tự động di chuyển quanh map (Random, Approach, Custom).
-	- **Did:** Thiết lập di chuyển tự động (Autonomous Movement) cho NPC theo các chế độ tự động (random, Approach), chế độ tùy chỉnh cũng tương tự nhưng do không gian map hẹp nên chưa đụng tới. ![[PixPin_2026-08-08_18-15-33.webp]]
-		![[Pasted image 20260808182110.png]]
-		![[Pasted image 20260808182151.png]]
-		![[Pasted image 20260808182320.png]]
+	- **Did:** Thiết lập di chuyển tự động (Autonomous Movement) cho NPC theo các chế độ tự động (random, Approach), chế độ tùy chỉnh cũng tương tự nhưng do không gian map hẹp nên chưa đụng tới. ![[assets/PixPin_2026-08-08_18-15-33.webp]]
+		![[assets/Pasted image 20260808182110.png]]
+		![[assets/Pasted image 20260808182151.png]]
+		![[assets/Pasted image 20260808182320.png]]
 	- **Pros:** Bắt đầu thổi hồn vào map, có sức sống hơn, không cần code phức tạp vẫn làm được
 	- **Cons:** -
-	- **Final Report:** -
+	- **Final Report:** [[Event-Driven Design in RMMV]] 
 
 5. **SomeRanDev - Tut #5: Building a Door!**: Làm một cánh cửa hoàn chỉnh.
+	- **Did:** Tạo sub map "Lang_Tan_Thu-Room_one". Tạo event "Door" để chuyển từ map làng tân thủ sang sub map đó.![[assets/PixPin_2026-08-13_20-39-22.webp]]
+	- **Pros:** Hệ thống map được xây dựng như các folder -> giúp dễ quản lý khi project scale to ra (vd trong mỗi map lại có hàng chục map con)
+		![[assets/Pasted image 20260813204233.png]]
+	- **Cons:** có 2 loại cửa / gạch nền, tròn và vuông, cần phải để ý để khi tạo door match tụi nó với nhau.
+	  ![[assets/Pasted image 20260813214705.png]]
+	- **Final Report:** [[content/RMMV_Documentary/1. Design_Reflection/Map Editor Evaluation|Map Editor Evaluation]]
 
 ---
 
 ### PHẦN 2: THIẾT KẾ CỐT TRUYỆN KINH DỊ
 
-_Mục tiêu: Hiểu tư duy làm game kinh dị giải đố trước khi lập trình._
+*Mục tiêu: Hiểu tư duy làm game kinh dị giải đố trước khi lập trình.*
+- Tài liệu tham khảo:
+	- [Horror That Lingers](https://www.youtube.com/watch?v=vSKtTBjSBg0)
+	- [What Makes a Good Horror Game?](https://www.youtube.com/watch?v=Gb2qKP5YDFU)
+	- [3 Major Elements to any Good Horror Game](https://www.youtube.com/watch?v=aO4fKS_6pls)
 
-6. **TheOdie - Bài 1 (Intro)** & **Bài 2 (What is Horror?)**: Hiểu vì sao game kinh dị RPG Maker lại chọn giải đố thay vì chiến đấu.
-7. **TheOdie - Bài 3 (Files and Overview)**: Đọc cốt truyện của Jake và Eric. Tải template game để chuẩn bị thực hành.
+6. **TheOdie - Bài 2 (What is Horror?)**: 
+   - **Sự khác biệt giữa Kinh dị hình ảnh và Kinh dị tâm lý:**
+	- **Kinh dị hình ảnh/hành động** tập trung vào yếu tố đồ họa, máu me, vũ khí,... điểm yếu là khi trải nghiệm chơi kết thúc, người chơi quay lại thế giới thực và lập tức cảm thấy an toàn.
+	- **Kinh dị tâm lý** đánh sâu vào tâm trí, khiến người chơi liên tục suy nghĩ và cảm giác sợ hãi sẽ bám theo họ ngay cả khi đã thoát game. Thể loại này dựa nhiều và **the uncanny** từ những chi tiết nhỏ nhặt có thể xảy ra trong đời thực.
+
+- **Nỗi sợ chủ quan**
+	- Bị chi phối bởi **văn hóa** và **độ tuổi**.
+	-  Để thực sự làm ai đó sợ hãi, cần khai thác vào những nỗi sợ thời thơ ấu mà player tưởng đã quên, hoặc tác động vào nỗi sợ cá nhân. **Vì thế sẽ không thể tạo ra một tựa game dọa được tất cả mọi người, mà phải nhắm vào một tệp khán giả cụ thể.** 
+
+- **3 Yếu tố của một game kinh dị tốt**
+	1. Nhịp độ chậm và có tính toán (Slow Pacing)
+		- Tạo ra sự bất an thông qua việc kéo dài trạng thái chờ đợi.
+		- Nỗi lo âu sẽ được khuyếch đại khi tâm trí người chơi tự lấp đầy những khoảng trống của sự chờ đợi bằng những kịch bản tồi tệ họ tự tưởng tượng.
+	2. Thiết kế không gian gây ngột ngạt
+		- Thiết kế không gian hẹp tác động đến cảm xúc người chơi thông qua 3 cơ chế:
+			- **Giới hạn khả năng di chuyển:** loại bỏ không gian né tránh, make us feel that we're not in control.
+			- **Ép buộc đối mặt** Trong những hành lang dài, người chơi không thể đi vòng qua mối nguy hiểm; họ buộc phải đối diện trực tiếp với nỗi sợ
+			- **Make the monster seem bigger and stand out** 
+	3. Cách sử dụng ánh sáng/bóng tối
+		- Ánh sáng là công cụ tốt nhất để khai thác **The fear of the Unknown.** Khi tầm nhìn bị hạn chế, não phải nỗ lực  giải mã những hình khối mập mờ trong bóng tối, từ đó tạo ra cảm giác lo âu liên tục.
+			- 
+
+- **Tại sao RPG maker kinh dị lại chọn Puzzle thay vì Combat/Action?
+	- Bản chất RPG là game nhập vai, thế mạnh nằm ở xây dựng thế giới và nhân vật để người chơi đồng cảm, **Nhân vật sợ hãi điều gì thì người chơi cũng sợ hãi điều đó**
+	- Nếu chọn cơ chế Combat, nhân vật sẽ mạnh lên nhờ Level up, điều này có thể tiêu diệt nổi sợ của player vì nó sẽ khiến họ tin rằng rồi họ sẽ đủ sức đánh bại thế lực đáng sợ đó.
+	- Ở Puzzles, thay vì chiến đấu, game designer có thể giấu cốt truyện vào các câu đố, giúp định hình nhân vật, bối cảnh, câu chuyện một cách tự nhiên.
+
+6. **TheOdie - Bài 3 (Files and Overview)**: Đọc cốt truyện của Jake và Eric. Tải template game để chuẩn bị thực hành.
+- 
 
 ---
 

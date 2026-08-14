@@ -16,29 +16,29 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
+      header: Shantell Sans
+      body: Shantell Sans
       code: IBM Plex Mono
     colors:
       lightMode:
         light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
+        lightgray: "#e2e8f0"
+        gray: "#94a3b8"
+        darkgray: "#475569"
+        dark: "#1e293b"
+        secondary: "#7c3aed"
+        tertiary: "#059669"
+        highlight: rgba(124, 58, 237, 0.12)
         textHighlight: "#fff23688"
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
+        light: "#16161a"
+        lightgray: "#282830"
+        gray: "#858598"
+        darkgray: "#cbd5e1"
+        dark: "#f8fafc"
+        secondary: "#a882ff"
+        tertiary: "#48c78e"
+        highlight: rgba(168, 130, 255, 0.15)
         textHighlight: "#b3aa0288"
 plugins:
   - source: "@quartz-community/created-modified-date"
@@ -100,6 +100,11 @@ plugins:
     order: 92
   - source: "@quartz-community/quartz-fonts"
     enabled: true
+    options:
+      fontOrigin: googleFonts
+      header: "Shantell Sans"
+      body: "Shantell Sans"
+      code: "IBM Plex Mono"
   - source: "@quartz-themes/core"
     enabled: false
     options:
@@ -152,11 +157,37 @@ plugins:
     layout:
       position: left
       priority: 50
-  - source: "@quartz-community/graph"
+  - source: "./plugins/graph"
     enabled: true
     layout:
       position: right
       priority: 10
+    options:
+      localGraph:
+        drag: true
+        zoom: true
+        depth: 1
+        scale: 1.15
+        repelForce: 2.2
+        centerForce: 0.18
+        linkDistance: 55
+        fontSize: 0.55
+        opacityScale: 1.0
+        showTags: true
+        focusOnHover: true
+      globalGraph:
+        drag: true
+        zoom: true
+        depth: -1
+        scale: 0.95
+        repelForce: 2.6
+        centerForce: 0.15
+        linkDistance: 60
+        fontSize: 0.55
+        opacityScale: 1.0
+        showTags: true
+        focusOnHover: true
+        enableRadial: true
   - source: "@quartz-community/search"
     enabled: true
     layout:
