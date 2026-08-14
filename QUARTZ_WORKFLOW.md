@@ -1,6 +1,6 @@
 # 📚 Cẩm Nang Workflow Làm Việc Với Quartz v5 (Digital Garden)
 
-Tài liệu này hướng dẫn chi tiết quy trình chuẩn từ A-Z khi làm việc với Quartz: từ chuẩn bị file nội dung, quản lý hình ảnh/video, cấu hình giao diện, kiểm tra cục bộ cho đến khi đẩy lên website (GitHub Pages).
+Tài liệu này hướng dẫn chi tiết quy trình chuẩn từ A-Z khi làm việc với Quartz: từ chuẩn bị file nội dung, quản lý hình ảnh/video, cấu hình giao diện, kiểm tra cục bộ cho đến khi đẩy lên website (GitHub Pages) và cách xử lý các sự cố thường gặp.
 
 ---
 
@@ -12,7 +12,9 @@ Tài liệu này hướng dẫn chi tiết quy trình chuẩn từ A-Z khi làm 
 5. [Tùy Chỉnh Giao Diện & Cấu Hình (`quartz.config.yaml`)](#5-tùy-chỉnh-giao-diện--cấu-hình-quartzconfigyaml)
 6. [Chạy Thử Nghiệm & Kiểm Tra Cục Bộ (Local Preview)](#6-chạy-thử-nghiệm--kiểm-tra-cục-bộ-local-preview)
 7. [Quy Trình Đẩy Lên Web (Deployment qua GitHub Pages)](#7-quy-trình-đẩy-lên-web-deployment-qua-github-pages)
-8. [Các Lệnh Quartz Hay Dùng](#8-các-lệnh-quartz-hay-dùng)
+8. [Xử Lý Sự Cố: File Quá Nặng, Lỗi Push & GitHub Actions Bị Skipped](#8-xử-lý-sự-cố-file-quá-nặng-lỗi-push--github-actions-bị-skipped)
+9. [Các Lệnh Quartz Hay Dùng](#9-các-lệnh-quartz-hay-dùng)
+10. [Checklist Tóm Tắt Khi Viết Bài Mới](#10-checklist-tóm-tắt-khi-viết-bài-mới)
 
 ---
 
@@ -30,6 +32,8 @@ my-notes/
 │       └── 1. Design_Reflection/
 │           └── Map Editor Evaluation.md
 │
+├── plugins/                     # 🔌 Plugin mở rộng cục bộ (ví dụ: Custom Graph View)
+│   └── graph/
 ├── quartz.config.yaml           # ⚙️ Tệp cấu hình giao diện, font chữ, plugin, layout
 ├── quartz/
 │   └── styles/
@@ -46,7 +50,7 @@ my-notes/
 
 ## 2. Cấu Hình Obsidian Để Tự Động Lưu Ảnh Vào `assets/`
 
-Nếu bạn dùng **Obsidian** để viết bài, hãy bật cấu hình này để mỗi lần dán ảnh (Ctrl + V) hoặc kéo thả ảnh vào, Obsidian sẽ tự động đưa vào `content/assets/`:
+Nếu bạn dùng **Obsidian** để viết bài, hãy bật cấu hình này để mỗi lần dán ảnh (`Ctrl + V`) hoặc kéo thả ảnh vào, Obsidian sẽ tự động đưa vào `content/assets/`:
 
 1. Mở Obsidian, nhấn vào biểu tượng **Settings (⚙️)** (hoặc `Ctrl + ,`).
 2. Vào mục **Files and links** ở menu bên trái.
@@ -123,12 +127,6 @@ Khi toàn bộ ảnh đã nằm trong `content/assets/`, bạn chèn vào markdo
   <p align="center"><i>Hình 1: Bản đồ làng tân thủ được thiết kế nhanh</i></p>
   ```
 
-### 4.3. Lưu ý tối ưu dung lượng (Performance)
-- **Hình ảnh chụp màn hình:** Nên dùng định dạng `.webp` hoặc nén `.png` qua [TinyPNG](https://tinypng.com).
-- **Video / Screen Recording:** Nếu quay màn hình lưu dạng `.webp` động, dung lượng có thể lên tới hàng chục MB (ví dụ 80MB). Nên cân nhắc:
-  - Giảm bớt số khung hình (FPS) hoặc giảm độ phân giải.
-  - Hoặc tải video lên YouTube / Streamable và nhúng dạng Iframe để trang tải siêu nhanh.
-
 ---
 
 ## 5. Tùy Chỉnh Giao Diện & Cấu Hình (`quartz.config.yaml`)
@@ -138,7 +136,7 @@ Tệp `quartz.config.yaml` kiểm soát mọi thiết lập của web:
 ### 5.1. Phông chữ & Tiêu đề trang
 ```yaml
 configuration:
-  pageTitle: "Tên Vườn Số Của Bạn"
+  pageTitle: "Quartz 5"
   locale: "vi-VN"
   baseUrl: "Daesple.github.io/Daesp_Writes"
   theme:
@@ -149,9 +147,11 @@ configuration:
       code: "IBM Plex Mono"
 ```
 
-### 5.2. Tinh chỉnh Graph View (Sơ đồ tri thức)
+### 5.2. Tinh chỉnh Graph View chuẩn Obsidian
+Dự án đã sử dụng plugin Graph tùy biến với các thông số vật lý D3 mô phỏng chân thực:
+
 ```yaml
-  - source: "@quartz-community/graph"
+  - source: "./plugins/graph"
     enabled: true
     layout:
       position: right
@@ -161,16 +161,23 @@ configuration:
         drag: true
         zoom: true
         depth: 1
-        scale: 1.2
-        repelForce: 1.5
-        linkDistance: 45
+        scale: 1.15
+        repelForce: 2.4
+        centerForce: 0.16
+        linkDistance: 55
+        fontSize: 0.55
+        showTags: true
         focusOnHover: true
       globalGraph:
         drag: true
         zoom: true
         depth: -1
-        repelForce: 1.8
-        linkDistance: 50
+        scale: 0.95
+        repelForce: 2.8
+        centerForce: 0.14
+        linkDistance: 60
+        fontSize: 0.55
+        showTags: true
         focusOnHover: true
         enableRadial: true
 ```
@@ -193,13 +200,14 @@ npx quartz build --serve
 - Terminal sẽ tạo một máy chủ ảo tại địa chỉ: `http://localhost:8080`
 - Giữ phím `Ctrl` và click vào đường link, hoặc mở trình duyệt gõ `http://localhost:8080`.
 - **Hot Reload:** Mỗi khi bạn sửa file Markdown hoặc file CSS, trang web trên trình duyệt sẽ tự động cập nhật ngay lập tức mà không cần khởi động lại lệnh.
+- **Xóa Cache:** Nếu thấy font hoặc CSS chưa cập nhật, nhấn **`Ctrl + F5`** trên trình duyệt.
 - Để tắt server: Nhấn `Ctrl + C` trong terminal.
 
 ---
 
 ## 7. Quy Trình Đẩy Lên Web (Deployment qua GitHub Pages)
 
-Dự án của bạn đã được thiết lập sẵn GitHub Actions (`.github/workflows/deploy-v5.yaml`). Bất cứ khi nào bạn đẩy code lên nhánh `v5`, GitHub sẽ tự động biên dịch và cập nhật trang web.
+Dự án của bạn đã được thiết lập sẵn GitHub Actions (`.github/workflows/deploy-v5.yaml`). Bất cứ khi nào bạn đẩy code lên nhánh `v5`, GitHub sẽ tự động biên dịch và xuất bản website.
 
 ### Quy Trình Cập Nhật Hàng Ngày (3 Bước Đơn Giản)
 
@@ -224,21 +232,69 @@ git push origin v5
 
 ---
 
-## 8. Các Lệnh Quartz Hay Dùng
+## 8. Xử Lý Sự Cố: File Quá Nặng, Lỗi Push & GitHub Actions Bị Skipped
+
+### 8.1. Nguyên nhân
+- **Giới hạn của GitHub:** GitHub cảnh báo khi file > 50MB và **từ chối (block) push** khi có file > 100MB.
+- **File WebP quay màn hình từ PixPin:** Các đoạn quay màn hình dài thường có dung lượng từ 30MB – 80MB+, dễ gây tràn bộ nhớ khi GitHub Actions biên dịch hoặc bị hủy giữa chừng (`Skipped` / `Cancelled`).
+
+### 8.2. Quy Trình Xử Lý Khi Push Bị Lỗi
+
+#### 🛑 Bước 1: Xử lý file nặng trước
+* **Cách 1 (Khuyên dùng):** Nén file `.webp` qua trang web miễn phí như [ezgif.com/optimize](https://ezgif.com/optimize) hoặc [squoosh.app](https://squoosh.app) để đưa dung lượng xuống dưới **5MB – 10MB**.
+* **Cách 2 (Cho video dài/nặng):** Tải video lên **YouTube** (chế độ Unlisted) hoặc **Streamable**, sau đó nhúng iframe trực tiếp vào Markdown:
+  ```html
+  <iframe width="100%" height="400" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+  ```
+
+#### ↩️ Bước 2: Hủy bỏ Commit chứa file nặng (Git Reset)
+Nếu bạn đã lỡ `git commit` file nặng và bị từ chối khi `git push`, file đó vẫn còn lưu trong lịch sử Git cục bộ. Bạn cần hủy commit đó:
+
+```powershell
+# 1. Hủy commit bị lỗi gần nhất (toàn bộ nội dung bài viết vừa sửa vẫn được giữ nguyên)
+git reset --soft HEAD~1
+
+# 2. Xóa file nặng cũ ra khỏi danh sách theo dõi của Git
+git rm --cached "content/assets/tên_file_nặng.webp"
+```
+
+#### 📦 Bước 3: Thay thế file nhẹ và Commit lại
+1. Lưu file `.webp` mới (đã nén) vào `content/assets/`.
+2. Cập nhật lại đường dẫn trong file Markdown.
+3. Thực hiện commit lại sạch sẽ:
+   ```powershell
+   git add .
+   git commit -m "Optimize media files and update notes"
+   git push origin v5
+   ```
+
+#### 🚀 Bước 4: Xử lý khi GitHub Actions bị Skipped / Muốn chạy lại thủ công
+Khi `git push` thành công ở Bước 3, GitHub Actions sẽ **tự động kích hoạt lại** tiến trình build mới.
+
+Nếu muốn chạy lại bằng tay:
+1. Mở trình duyệt vào: `https://github.com/Daesple/Daesp_Writes/actions`
+2. Chọn workflow **Deploy Quartz site to GitHub Pages** ở cột bên trái.
+3. Bấm nút **Run workflow** ở góc trên bên phải:
+   - Chọn Branch: **`v5`**
+   - Nhấn nút xanh **Run workflow**.
+
+---
+
+## 9. Các Lệnh Quartz Hay Dùng
 
 | Lệnh | Mô tả |
 | :--- | :--- |
 | `npx quartz build` | Kiểm tra biên dịch toàn bộ trang web (phát hiện lỗi link gãy hoặc lỗi config) |
-| `npx quartz build --serve` | Khởi chạy server kiểm tra giao diện trực tiếp trên máy |
+| `npx quartz build --serve` | Khởi chạy server kiểm tra giao diện trực tiếp trên máy (`http://localhost:8080`) |
 | `npm run format` | Tự động định dạng code và làm đẹp các file trong dự án |
 | `npm run check` | Kiểm tra lỗi TypeScript và định dạng Prettier |
 
 ---
 
-## 💡 Checklist Tóm Tắt Khi Viết Bài Mới
+## 10. Checklist Tóm Tắt Khi Viết Bài Mới
 
 - [ ] Tạo file `.md` trong `content/` (hoặc thư mục con bên trong `content/`).
 - [ ] Thêm tiêu đề bài viết và liên kết Wikilink `[[Tên Bài]]` vào `content/index.md` nếu muốn trang chủ dẫn tới bài này.
-- [ ] Mọi hình ảnh chụp màn hình / video kéo vào phải lưu tại `content/assets/`.
+- [ ] Mọi hình ảnh chụp màn hình / video kéo vào phải lưu tại `content/assets/` và kiểm tra dung lượng (< 10MB).
 - [ ] Chạy `npx quartz build --serve` xem thử bài viết có lỗi font hoặc mất ảnh không.
 - [ ] Chạy `git add .` -> `git commit -m "..."` -> `git push origin v5` để xuất bản lên web!
