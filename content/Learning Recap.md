@@ -21,6 +21,7 @@
 	- **Cons:** Mới đầu hơi overwhelm![[assets/Pasted image 20260808154252.png]]
 	- **Final Report:** Nguyên liệu cho [[Map Editor Evaluation]]  ^891d1b
 
+
 2. **SomeRanDev - Tut #2: Creating an NPC!**: Tạo sự kiện, dùng lệnh _Show Text_ cho nhân vật nói chuyện. ^0156e2
 	- **Did:** Tạo một NPC bằng event, tạo tương tác dialogue đơn giản![[assets/PixPin_2026-08-08_16-07-50.webp]]
 	- **Pros:** Mới vọc vạch làm quen nên chưa rõ, nhưng thấy làm quen cũng nhanh. Nếu quen rồi chắc có thể làm được nhiều thứ hay ho với các Event commands này.
@@ -29,6 +30,7 @@
 
 	 - **Final report:** Nguyên liệu cho [[Event-Driven Design in RMMV]]
 
+
 3. **SomeRanDev - Tut #3: Moving to other Maps!**: Học cách làm sự kiện truyền tống (Transfer Player) để đi từ map này sang map khác. ^4022be
 	-  **Did:** Tạp map mới "Làng Tân Thủ", và thiết lập sự kiện transfer qua lại.![[assets/Pasted image 20260808171549.png]]
 		![[assets/PixPin_2026-08-08_17-17-27.webp]]
@@ -36,6 +38,7 @@
 	
 	- **Cons:** Tạo transfer event thủ công thì không có SE (Sound effect), còn dùng rightclick -> QuickEvent Creation -> Transfer player thì lại có SE. Ở địa hình không same level với character (Đồi núi, không thể bước đè lên được, thì phải nhớ chuyển Priority của địa hình đó sang "Same as characters" và chuyển Trigger từ "Player touch" sang "Action Button")
 	- **Final report:** Nguyên liệu cho [[Event-Driven Design in RMMV]]
+
 
 4. **SomeRanDev - Tut #4: Making NPCs Move!**: Học cách cho nhân vật tự động di chuyển quanh map (Random, Approach, Custom).
 	- **Did:** Thiết lập di chuyển tự động (Autonomous Movement) cho NPC theo các chế độ tự động (random, Approach), chế độ tùy chỉnh cũng tương tự nhưng do không gian map hẹp nên chưa đụng tới. ![[assets/PixPin_2026-08-08_18-15-33.webp]]
@@ -46,13 +49,16 @@
 	- **Cons:** -
 	- **Final Report:** [[Event-Driven Design in RMMV]] 
 
+
 5. **SomeRanDev - Tut #5: Building a Door!**: Làm một cánh cửa hoàn chỉnh.
 	- **Did:** Tạo sub map "Lang_Tan_Thu-Room_one". Tạo event "Door" để chuyển từ map làng tân thủ sang sub map đó.![[assets/PixPin_2026-08-13_20-39-22.webp]]
 	- **Pros:** Hệ thống map được xây dựng như các folder -> giúp dễ quản lý khi project scale to ra (vd trong mỗi map lại có hàng chục map con)
+	  
 		![[assets/Pasted image 20260813204233.png]]
 	- **Cons:** có 2 loại cửa / gạch nền, tròn và vuông, cần phải để ý để khi tạo door match tụi nó với nhau.
 	  ![[assets/Pasted image 20260813214705.png]]
 	- **Final Report:** [[content/RMMV_Documentary/1. Design_Reflection/Map Editor Evaluation|Map Editor Evaluation]]
+
 
 ---
 
@@ -64,10 +70,11 @@
 	- [What Makes a Good Horror Game?](https://www.youtube.com/watch?v=Gb2qKP5YDFU)
 	- [3 Major Elements to any Good Horror Game](https://www.youtube.com/watch?v=aO4fKS_6pls)
 
+
 6. **TheOdie - Bài 2 (What is Horror?)**: 
    - **Sự khác biệt giữa Kinh dị hình ảnh và Kinh dị tâm lý:**
-	- **Kinh dị hình ảnh/hành động** tập trung vào yếu tố đồ họa, máu me, vũ khí,... điểm yếu là khi trải nghiệm chơi kết thúc, người chơi quay lại thế giới thực và lập tức cảm thấy an toàn.
-	- **Kinh dị tâm lý** đánh sâu vào tâm trí, khiến người chơi liên tục suy nghĩ và cảm giác sợ hãi sẽ bám theo họ ngay cả khi đã thoát game. Thể loại này dựa nhiều và **the uncanny** từ những chi tiết nhỏ nhặt có thể xảy ra trong đời thực.
+	   - **Kinh dị hình ảnh/hành động** tập trung vào yếu tố đồ họa, máu me, vũ khí,... điểm yếu là khi trải nghiệm chơi kết thúc, người chơi quay lại thế giới thực và lập tức cảm thấy an toàn.
+	   - **Kinh dị tâm lý** đánh sâu vào tâm trí, khiến người chơi liên tục suy nghĩ và cảm giác sợ hãi sẽ bám theo họ ngay cả khi đã thoát game. Thể loại này dựa nhiều và **the uncanny** từ những chi tiết nhỏ nhặt có thể xảy ra trong đời thực.
 
 - **Nỗi sợ chủ quan**
 	- Bị chi phối bởi **văn hóa** và **độ tuổi**.

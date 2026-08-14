@@ -133,19 +133,26 @@ Khi toàn bộ ảnh đã nằm trong `content/assets/`, bạn chèn vào markdo
 
 Tệp `quartz.config.yaml` kiểm soát mọi thiết lập của web:
 
-### 5.1. Phông chữ & Tiêu đề trang
-```yaml
-configuration:
-  pageTitle: "Quartz 5"
-  locale: "vi-VN"
-  baseUrl: "Daesple.github.io/Daesp_Writes"
-  theme:
-    fontOrigin: "googleFonts"
-    typography:
-      header: "Shantell Sans"
-      body: "Shantell Sans"
-      code: "IBM Plex Mono"
-```
+### 5.1. Tiêu đề trang (Headline) & Favicon (Icon trang web)
+
+1. **Đổi tiêu đề góc trên cùng (Headline / Page Title):**
+   Mở tệp `quartz.config.yaml` và sửa dòng `pageTitle`:
+   ```yaml
+   configuration:
+     pageTitle: "Daesp Write"
+     baseUrl: "Daesple.github.io/Daesp_Writes"
+   ```
+
+2. **Thêm / Thay đổi Favicon (Logo nhỏ trên tab trình duyệt):**
+   * Chuẩn bị 1 file ảnh logo/avatar vuông định dạng **`.png`** (kích thước khuyến nghị từ `64x64px` đến `512x512px`).
+   * Đặt tên file là **`icon.png`**.
+   * Copy và dán đè vào thư mục:
+     📁 `quartz/static/icon.png`
+   * Plugin Favicon của Quartz sẽ tự động chuyển đổi file này thành `favicon.ico` chuẩn cho toàn bộ website khi build.
+
+3. **Thay đổi ảnh xem trước khi chia sẻ link (Social Card / Open Graph):**
+   * Đặt file ảnh kích thước `1200x630px` tên là **`og-image.png`**.
+   * Dán vào thư mục: 📁 `quartz/static/og-image.png`.
 
 ### 5.2. Tinh chỉnh Graph View chuẩn Obsidian
 Dự án đã sử dụng plugin Graph tùy biến với các thông số vật lý D3 mô phỏng chân thực:
