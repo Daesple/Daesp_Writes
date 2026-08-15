@@ -1,3 +1,10 @@
+---
+title:
+description: WIP
+tags:
+publish: true
+---
+
 # Objective
 
 - an minimum viable product of a game produced in RPG Maker

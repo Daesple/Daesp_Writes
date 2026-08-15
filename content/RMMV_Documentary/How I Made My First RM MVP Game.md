@@ -1,3 +1,9 @@
+---
+title: How I Made My First RM MVP Game
+description: WIP
+tags:
+publish: true
+---
 
 # 1. Introduction: The Expectation vs. Prototyping Speed
 [[The biggest lesson i learned through this]]
