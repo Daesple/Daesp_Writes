@@ -30,14 +30,32 @@ h6,
 }
 
 // Spacing for lists & nested items
-article {
-  ol > li, ul > li {
-    margin-bottom: 0.55rem;
-    line-height: 1.65;
+.page article {
+  ul, ol {
+    padding-left: 1.5rem;
   }
-  ol > li > ol, ol > li > ul, ul > li > ul, ul > li > ol {
-    margin-top: 0.35rem;
-    margin-bottom: 0.35rem;
+
+  // Top-level list item spacing
+  ol > li, ul > li {
+    margin-bottom: 0.75rem !important;
+    line-height: 1.7;
+
+    // Nested list spacing
+    & > ul, & > ol {
+      margin-top: 0.35rem !important;
+      margin-bottom: 0.35rem !important;
+    }
+
+    // Nested list item spacing
+    & > ul > li, & > ol > li {
+      margin-bottom: 0.35rem !important;
+    }
+  }
+
+  // Images/Media inside list items
+  li img, li figure, li p:has(img) {
+    margin-top: 0.6rem !important;
+    margin-bottom: 0.6rem !important;
   }
 }
 
