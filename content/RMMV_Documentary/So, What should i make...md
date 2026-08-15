@@ -20,7 +20,7 @@ In other words, the aesthetics or polishing level is not the point of this task.
 ---
 # The Idea - "Papilio"
 
-![[Pasted image 20260815194938.png]]
+![[assets/Pasted image 20260815194938.png]]
 ## Concept
 ### Game ID
 - **Bối cảnh:** _Mirroria_ – một thế giới siêu thực được dệt nên từ những mảnh vô thức vụn vỡ của Elya.
@@ -28,9 +28,9 @@ In other words, the aesthetics or polishing level is not the point of this task.
 - **Phản diện chính:** **Nyx**, cái bóng (Shadow) của Elya, hiện thân của những nỗi sợ và tổn thương bị kìm nén.
 - **Mục tiêu tối thượng:** Vượt qua ranh giới vô thức, thu thập các mảnh cánh bướm bản ngã để đối diện, chấp nhận Nyx và hóa thành **Alya** – bản thể tự do
 
-| ![[Pasted image 20260815195133.png\|]] | ![[Pasted image 20260815195415.png]] |
-| -------------------------------------- | ------------------------------------ |
-| <center>Elya</center>                  | <center>Nyx</center>                 |
+| ![[assets/Pasted image 20260815195133.png]] | ![[assets/Pasted image 20260815195415.png]] |
+| ------------------------------------------- | ------------------------------------------- |
+| <center>Elya</center>                       | <center>Nyx</center>                        |
 ### Câu Chuyện
 
 > **Synopsis:** **Elya** thức dậy trong thế giới vô thức *Mirroria*. Cô luôn đeo chiếc mặt nạ gốm vô cảm và không nhớ nổi khuôn mặt thật của mình. Để thoát ra, cô phải đối  mặt với **Nyx** - kẻ luôn đeo bám và biến đổi theo nổi sợ của cô.
