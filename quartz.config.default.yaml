@@ -10,7 +10,9 @@ configuration:
   baseUrl: quartz.jzhao.xyz
   ignorePatterns:
     - private
+    - Private
     - templates
+    - Templates
     - .obsidian
   theme:
     fontOrigin: googleFonts

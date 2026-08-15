@@ -10,7 +10,9 @@ configuration:
   baseUrl: Daesple.github.io/Daesp_Writes
   ignorePatterns:
     - private
+    - Private
     - templates
+    - Templates
     - .obsidian
   theme:
     fontOrigin: googleFonts

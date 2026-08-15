@@ -1,1 +1,34 @@
-Currently working at [[Learning Recap]]
+---
+title: Daesp's Notebook
+description: Không gian nghiên cứu, ghi chép và lưu trữ của Bảo
+tags:
+  - homepage
+  - "#index"
+---
+## 🚀 Dự Án Đang Triển Khai (Active Projects)
+
+### 🎮 [[Learning Recap|RPG Maker MV (RMMV) Documentary]]
+Dự án nghiên cứu khả năng tạo mẫu nhanh (Rapid Prototyping) và kiến trúc Event-Driven của RPG Maker MV thông qua việc xây dựng một tựa game kinh dị giải đố.
+
+* 🗺️ **Mục lục lộ trình:** [[Learning Recap|Xem toàn bộ Map of Content (MOC)]]
+* 📄 **Báo cáo tổng kết:** ⏳ [[How I Made My First RM MVP Game|How I Made My First RM MVP Game]] *(WIP)*
+* 🦋 **Ý tưởng dự án:** ⏳ [[So, What should i make...|Game Concept: "Papilio"]] *(WIP)*
+
+---
+
+## 📚 Kho Tri Thức & Recap Tư Liệu (Knowledge Base & Resources)
+Nơi Bảo ghi chép, tổng hợp và đúc kết những tư liệu, video và bài viết:
+
+* 📋 [[Bayesian thinking|Bayesian Thinking]]: Cập nhật niềm tin dựa trên bằng chứng và xác suất thực tế *(Planned)*.
+* 📋 [[Play the Long game|Play the Long Game]]: Tư duy tích lũy giá trị bền vững và kiên trì trong sáng tạo *(Planned)*.
+* 📋 [[Understanding is the new bottleneck|Sự Hiểu Biết Là Nút Thắt Cổ Chai Mới]]: Năng lực hiểu sâu bản chất vấn đề trong kỷ nguyên bão hòa thông tin *(Planned)*.
+
+---
+
+## 🏷️ Quy Ước Trạng Thái Ghi Chú
+- 📋 **`Planned`**: Đã lên lịch viết.
+- ⏳ **`WIP`**: Đang viết.
+- ✅ **`Done`**: Hoàn thành.
+
+* Toàn bộ bài viết được liên kết với nhau theo cấu trúc mạng nhện.
+* Bạn có thể xem sơ đồ tương tác ở góc trên bên phải, hoặc nhấn **`Ctrl + G`** để mở Graph View.

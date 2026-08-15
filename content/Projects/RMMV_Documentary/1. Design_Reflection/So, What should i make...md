@@ -1,9 +1,16 @@
 ---
-title:
-description: WIP
+title: "Game Concept: Papilio"
+description: "Bản thảo ý tưởng, cốt truyện và phân tích mục tiêu cho tựa game kinh dị giải đố MVP 'Papilio'."
+status: wip
 tags:
-publish: true
+  - Game-design
+  - Horror
+  - Concept
+  - WIP
 ---
+
+> [!WARNING] 🌿 Bản thảo đang hoàn thiện (Work in Progress - WIP)
+> *Ghi chú này đang được bổ sung và cập nhật nội dung liên tục cùng tiến độ dự án.*
 
 # Objective
 
@@ -56,3 +63,7 @@ Elya bước xuống bậc thang đầu tiên.
 ---
 
 Type of Puzzles
+
+
+---
+

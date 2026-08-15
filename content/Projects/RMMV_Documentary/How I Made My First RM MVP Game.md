@@ -1,9 +1,16 @@
 ---
 title: How I Made My First RM MVP Game
-description: WIP
+description: "Báo cáo tổng kết toàn diện quá trình tạo mẫu game MVP trên nền tảng RPG Maker MV."
+status: wip
 tags:
-publish: true
+  - RMMV
+  - Game-design
+  - Report
+  - WIP
 ---
+
+> [!WARNING] 🌿 Bản thảo đang hoàn thiện (Work in Progress - WIP)
+> *Báo cáo này đang được cập nhật tổng kết theo từng mốc thử nghiệm của dự án.*
 
 # 1. Introduction: The Expectation vs. Prototyping Speed
 [[The biggest lesson i learned through this]]
@@ -13,7 +20,7 @@ publish: true
 [[An Opinionated Engine]]
 
 # 3. The Map Editor: Dream of every game maker?
-[[content/RMMV_Documentary/1. Design_Reflection/Map Editor Evaluation]]
+[[Map Editor Evaluation]]
 
 # 4. Core Architecture: Event-Driven Design & Composable Actions
 [[Event-Driven Design in RMMV]] 
