@@ -9,8 +9,7 @@ tags:
 > [!NOTE] 📋 Ghi chú đang ở giai đoạn lên kế hoạch
 > *Bài viết này đang ở giai đoạn chuẩn bị và tổng hợp tư liệu. Nội dung sẽ được cập nhật sau.*
 
-# Sự Hiểu Biết Là Nút Thắt Cổ Chai Mới
-
+# Understanding is the new bottleneck
 ### 🔗 Nguồn tư liệu (Source Links):
 - [Understanding is the New Bottleneck - Video](https://www.youtube.com/watch?v=WkBPX-oDMnA)
 

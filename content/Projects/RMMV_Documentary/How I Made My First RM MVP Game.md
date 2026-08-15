@@ -9,8 +9,8 @@ tags:
   - WIP
 ---
 
-> [!WARNING] ⏳ Bản thảo đang hoàn thiện (Work in Progress - WIP)
-> *Báo cáo này đang được cập nhật tổng kết theo từng mốc thử nghiệm của dự án.*
+> [!NOTE] 📋 Ghi chú đang ở giai đoạn lên kế hoạch
+> *Bài viết này đang ở giai đoạn chuẩn bị và tổng hợp tư liệu. Nội dung sẽ được cập nhật sau.*
 
 # 1. Introduction: The Expectation vs. Prototyping Speed
 [[The biggest lesson i learned through this]]

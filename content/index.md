@@ -8,7 +8,7 @@ tags:
 ## 🚀 Dự Án Đang Triển Khai (Active Projects)
 
 ### 🎮 RPG Maker MV (RMMV) Documentary
-Dự án nghiên cứu khả năng tạo mẫu nhanh (Rapid Prototyping) và kiến trúc Event-Driven của RPG Maker MV thông qua việc xây dựng một tựa game kinh dị giải đố.
+Dự án nghiên cứu khả năng tạo Prototype nhanh và kiến trúc Event-Driven của RPG Maker MV thông qua việc xây dựng một tựa game kinh dị giải đố.
 
 * 🗺️ **Mục lục lộ trình:** 👉 [[Projects/RMMV_Documentary/Learning Recap|Xem toàn bộ Map of Content (MOC)]]
 * 📄 **Báo cáo tổng kết:** ⏳ [[Projects/RMMV_Documentary/How I Made My First RM MVP Game|How I Made My First RM MVP Game]] *(WIP)*
@@ -16,7 +16,7 @@ Dự án nghiên cứu khả năng tạo mẫu nhanh (Rapid Prototyping) và ki�
 
 ---
 
-## 📚 Kho Tri Thức & Recap Tư Liệu (Knowledge Base & Resources)
+## 📚 Ghi chú & Recap Tư Liệu
 Nơi Bảo ghi chép, tổng hợp và đúc kết những tư liệu, video và bài viết:
 
 * 📋 [[Resources/Bayesian thinking|Bayesian Thinking]]: Cập nhật niềm tin dựa trên bằng chứng và xác suất thực tế *(Planned)*.
