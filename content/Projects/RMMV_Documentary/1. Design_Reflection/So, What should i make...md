@@ -7,6 +7,9 @@ tags:
   - Horror
   - Concept
   - WIP
+aliases:
+  - "/RMMV_Documentary/so,-what-should-i-make.."
+  - "RMMV_Documentary/So, What should i make..."
 ---
 
 > [!WARNING] 🌿 Bản thảo đang hoàn thiện (Work in Progress - WIP)

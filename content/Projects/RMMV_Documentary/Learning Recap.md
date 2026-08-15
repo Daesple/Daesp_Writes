@@ -6,6 +6,9 @@ tags:
   - Game-design
   - Learning
   - MOC
+aliases:
+  - "/RMMV_Documentary/learning-recap"
+  - "RMMV_Documentary/Learning Recap"
 ---
 
 # 📖 Learning Recap (Map of Content)
