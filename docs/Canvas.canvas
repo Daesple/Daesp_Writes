@@ -36,5 +36,9 @@
 		{"id":"edge-labeled-demo","fromNode":"edge-source","fromSide":"right","toNode":"edge-labeled","toSide":"left","label":"labeled edge"},
 		{"id":"edge-colored-demo","fromNode":"edge-source","fromSide":"right","toNode":"edge-colored","toSide":"left","color":"#ff6600"},
 		{"id":"edge-preset-demo","fromNode":"edge-labeled","fromSide":"right","toNode":"edge-preset","toSide":"left","color":"6"}
-	]
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
 }

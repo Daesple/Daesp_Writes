@@ -16,7 +16,7 @@ tags:
 [[The biggest lesson i learned through this]]
 
 # 2. The Idea
-[[So, What should i make..]]
+[[So, What should i make]]
 [[An Opinionated Engine]]
 
 # 3. The Map Editor: Dream of every game maker?

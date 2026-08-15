@@ -32,7 +32,7 @@ Trang tổng hợp toàn bộ lộ trình và ghi chép học tập làm game ki
 - Giới thiệu về RPG Maker: [RM: The Unexpected Stage](https://docs.google.com/document/d/15-tF9PpV5zjyVZhHLTcwYJzH3VKtbJR8l_oec2wm-0I/edit?usp=sharing)
 - Bài viết tổng kết dự án MVP: [[How I Made My First RM MVP Game]]
 - Đánh giá công cụ vẽ bản đồ: [[Map Editor Evaluation]]
-- Tài liệu thiết kế dự án: [[So, What should i make..]]
+- Tài liệu thiết kế dự án: [[So, What should i make]]
 
 ---
 

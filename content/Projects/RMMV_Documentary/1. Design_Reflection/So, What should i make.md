@@ -8,8 +8,12 @@ tags:
   - Concept
   - WIP
 aliases:
+  - "So, What should i make.."
+  - "So, What should i make..."
+  - "So, What should i make"
   - "/RMMV_Documentary/so,-what-should-i-make.."
   - "RMMV_Documentary/So, What should i make..."
+  - "/so,-what-should-i-make.."
 ---
 
 > [!WARNING] ⏳ Bản thảo đang hoàn thiện (Work in Progress - WIP)

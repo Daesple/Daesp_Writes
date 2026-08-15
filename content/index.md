@@ -12,7 +12,7 @@ Dự án nghiên cứu khả năng tạo Prototype nhanh và kiến trúc Event-
 
 * 🗺️ **Mục lục lộ trình:** 👉 [[Projects/RMMV_Documentary/Learning Recap|Xem toàn bộ Map of Content (MOC)]]
 * 📄 **Báo cáo tổng kết:** ⏳ [[Projects/RMMV_Documentary/How I Made My First RM MVP Game|How I Made My First RM MVP Game]] *(WIP)*
-* 🦋 **Ý tưởng dự án:** ⏳ [[Projects/RMMV_Documentary/1. Design_Reflection/So, What should i make..|Game Concept: "Papilio"]] *(WIP)*
+* 🦋 **Ý tưởng dự án:** ⏳ [[So, What should i make|Game Concept: "Papilio"]] *(WIP)*
 
 ---
 
