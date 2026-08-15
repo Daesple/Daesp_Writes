@@ -200,4 +200,155 @@ h6,
   }
 }
 
+// ==========================================
+// 🔍 Expandable Popover Preview (Large Screen Overlay)
+// ==========================================
+.popover {
+  transition: opacity 0.15s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.active-popover {
+    display: block !important;
+  }
+
+  & > .popover-inner {
+    user-select: text !important;
+    cursor: auto !important;
+    position: relative;
+    padding-top: 2rem !important;
+  }
+
+  .popover-actions {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    z-index: 10;
+
+    .popover-btn {
+      background: var(--light);
+      border: 1px solid var(--lightgray);
+      color: var(--darkgray);
+      border-radius: 6px;
+      padding: 0.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+      &:hover {
+        background: var(--lightgray);
+        color: var(--dark);
+        transform: scale(1.08);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      .icon-compress {
+        display: none;
+      }
+    }
+  }
+
+  // 🌟 LARGE SCREEN OVERLAY STATE (75-80% Screen Size)
+  &.popover-expanded {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 80vw !important;
+    max-width: 1000px !important;
+    height: 80vh !important;
+    max-height: 85vh !important;
+    padding: 0 !important;
+    z-index: 10005 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    animation: popoverZoomIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+    & > .popover-inner {
+      width: 100% !important;
+      max-height: 100% !important;
+      height: 100% !important;
+      padding: 2.5rem 3rem !important;
+      overflow-y: auto !important;
+      user-select: text !important;
+      cursor: auto !important;
+      background-color: var(--light) !important;
+      border-radius: 14px !important;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45) !important;
+      border: 1px solid var(--lightgray) !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+
+      h1, h2, h3, h4 {
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+      }
+
+      img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+    }
+
+    .popover-actions {
+      top: 1.2rem;
+      right: 1.5rem;
+
+      .popover-btn {
+        padding: 0.45rem;
+
+        .icon-expand {
+          display: none;
+        }
+
+        .icon-compress {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// Backdrop overlay when large screen is open
+#popover-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@keyframes popoverZoomIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
 
