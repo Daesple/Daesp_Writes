@@ -29,6 +29,18 @@ h6,
   font-weight: 700;
 }
 
+// Spacing for lists & nested items
+article {
+  ol > li, ul > li {
+    margin-bottom: 0.55rem;
+    line-height: 1.65;
+  }
+  ol > li > ol, ol > li > ul, ul > li > ul, ul > li > ol {
+    margin-top: 0.35rem;
+    margin-bottom: 0.35rem;
+  }
+}
+
 // ==========================================
 // 🕸️ Obsidian-Style Graph View UX/UI
 // ==========================================
