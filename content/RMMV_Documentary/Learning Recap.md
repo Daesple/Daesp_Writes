@@ -39,7 +39,7 @@ Tạo Project, vọc Tileset và vẽ bản đồ.
 #### 2. SomeRanDev - Tut #2: Creating an NPC!
 Tạo sự kiện, dùng lệnh _Show Text_ cho nhân vật nói chuyện. ^0156e2
 - **Did:** Tạo một NPC bằng event, tạo tương tác dialogue đơn giản!
-  ![[content/assets/PixPin_2026-08-08_16-07-50.webp]]
+  ![[assets/PixPin_2026-08-08_16-07-50.webp]]
 - **Pros:** Mới vọc vạch làm quen nên chưa rõ, nhưng thấy làm quen cũng nhanh. Nếu quen rồi chắc có thể làm được nhiều thứ hay ho với các Event commands này.
 - **Cons:** Dễ lọt hố và overwhelm (like me in this whole week - i try to learn all the commands 😭). Và liệu nó có thể custom được đến đâu? hay chỉ bị giới hạn trong những command cho trước (hình như có thể dùng script và plugin trong đây, nhưng chưa xem tới).
   ![[assets/Pasted image 20260808161115.png]]
@@ -50,7 +50,7 @@ Tạo sự kiện, dùng lệnh _Show Text_ cho nhân vật nói chuyện. ^0156
 Học cách làm sự kiện truyền tống (Transfer Player) để đi từ map này sang map khác. ^4022be
 - **Did:** Tạo map mới "Làng Tân Thủ", và thiết lập sự kiện transfer qua lại.
   ![[assets/Pasted image 20260808171549.png]]
-  ![[content/assets/PixPin_2026-08-08_17-17-27.webp]]
+  ![[assets/PixPin_2026-08-08_17-17-27.webp]]
   ![[assets/Pasted image 20260808174316.png]]
 - **Cons:** Tạo transfer event thủ công thì không có SE (Sound effect), còn dùng rightclick -> QuickEvent Creation -> Transfer player thì lại có SE. Ở địa hình không same level với character (Đồi núi, không thể bước đè lên được, thì phải nhớ chuyển Priority của địa hình đó sang "Same as characters" và chuyển Trigger từ "Player touch" sang "Action Button").
 - **Final report:** Nguyên liệu cho [[Event-Driven Design in RMMV]]
@@ -58,7 +58,7 @@ Học cách làm sự kiện truyền tống (Transfer Player) để đi từ ma
 #### 4. SomeRanDev - Tut #4: Making NPCs Move!
 Học cách cho nhân vật tự động di chuyển quanh map (Random, Approach, Custom).
 - **Did:** Thiết lập di chuyển tự động (Autonomous Movement) cho NPC theo các chế độ tự động (random, Approach), chế độ tùy chỉnh cũng tương tự nhưng do không gian map hẹp nên chưa đụng tới.
-  ![[content/assets/PixPin_2026-08-08_18-15-33.webp]]
+  ![[assets/PixPin_2026-08-08_18-15-33.webp]]
   ![[assets/Pasted image 20260808182110.png]]
   ![[assets/Pasted image 20260808182151.png]]
   ![[assets/Pasted image 20260808182320.png]]
@@ -69,7 +69,7 @@ Học cách cho nhân vật tự động di chuyển quanh map (Random, Approach
 #### 5. SomeRanDev - Tut #5: Building a Door!
 Làm một cánh cửa hoàn chỉnh.
 - **Did:** Tạo sub map "Lang_Tan_Thu-Room_one". Tạo event "Door" để chuyển từ map làng tân thủ sang sub map đó.
-  ![[content/assets/PixPin_2026-08-13_20-39-22_optimized.webp]]
+  ![[assets/PixPin_2026-08-13_20-39-22_optimized.webp]]
 - **Pros:** Hệ thống map được xây dựng như các folder -> giúp dễ quản lý khi project scale to ra (ví dụ trong mỗi map lại có hàng chục map con).
   ![[assets/Pasted image 20260813204233.png]]
 - **Cons:** Có 2 loại cửa / gạch nền (tròn và vuông), cần phải để ý để khi tạo door match tụi nó với nhau.
