@@ -57,7 +57,8 @@ tags:
 	- **Final Report:** [[Event-Driven Design in RMMV]] 
 <br>
 5. **SomeRanDev - Tut #5: Building a Door!**: Làm một cánh cửa hoàn chỉnh.
-	- **Did:** Tạo sub map "Lang_Tan_Thu-Room_one". Tạo event "Door" để chuyển từ map làng tân thủ sang sub map đó.![[content/assets/PixPin_2026-08-13_20-39-22.webp]]
+	- **Did:** Tạo sub map "Lang_Tan_Thu-Room_one". Tạo event "Door" để chuyển từ map làng tân thủ sang sub map đó.
+    ![[content/assets/PixPin_2026-08-13_20-39-22_optimized.webp]]
 	- **Pros:** Hệ thống map được xây dựng như các folder -> giúp dễ quản lý khi project scale to ra (vd trong mỗi map lại có hàng chục map con)
 	  
 		![[assets/Pasted image 20260813204233.png]]
@@ -75,43 +76,45 @@ tags:
 <br>
 6. **TheOdie - Bài 2 (What is Horror?)**: 
    - **Sự khác biệt giữa Kinh dị hình ảnh và Kinh dị tâm lý:**
-	   - **Kinh dị hình ảnh/hành động** tập trung vào yếu tố đồ họa, máu me, vũ khí,... điểm yếu là khi trải nghiệm chơi kết thúc, người chơi quay lại thế giới thực và lập tức cảm thấy an toàn.
-	   - **Kinh dị tâm lý** đánh sâu vào tâm trí, khiến người chơi liên tục suy nghĩ và cảm giác sợ hãi sẽ bám theo họ ngay cả khi đã thoát game. Thể loại này dựa nhiều và **the uncanny** từ những chi tiết nhỏ nhặt có thể xảy ra trong đời thực.
-	 <br>
+		-  **Kinh dị hình ảnh/hành động** tập trung vào yếu tố đồ họa, máu me, vũ khí,... điểm yếu là khi trải nghiệm chơi kết thúc, người chơi quay lại thế giới thực và lập tức cảm thấy an toàn.
+		- **Kinh dị tâm lý** đánh sâu vào tâm trí, khiến người chơi liên tục suy nghĩ và cảm giác sợ hãi sẽ bám theo họ ngay cả khi đã thoát game. Thể loại này dựa nhiều và **the uncanny** từ những chi tiết nhỏ nhặt có thể xảy ra trong đời thực.
+<br>
    - **Nỗi sợ chủ quan**
-        -  Bị chi phối bởi **văn hóa** và **độ tuổi**.
-    	-  Để thực sự làm ai đó sợ hãi, cần khai thác vào những nỗi sợ thời thơ ấu mà player tưởng đã quên, hoặc tác động vào nỗi sợ cá nhân. **Vì thế sẽ không thể tạo ra một tựa game dọa được tất cả mọi người, mà phải nhắm vào một tệp khán giả cụ thể.** 
-	<br>  
-   - **3 Yếu tố của một game kinh dị tốt**
-	1. Nhịp độ chậm và có tính toán (Slow Pacing)
-		- Tạo ra sự bất an thông qua việc kéo dài trạng thái chờ đợi.
-		- Nỗi lo âu sẽ được khuyếch đại khi tâm trí người chơi tự lấp đầy những khoảng trống của sự chờ đợi bằng những kịch bản tồi tệ họ tự tưởng tượng.
-		<br>  
-	2. Thiết kế không gian gây ngột ngạt
-		- Thiết kế không gian hẹp tác động đến cảm xúc người chơi thông qua 3 cơ chế:
+	    -  Bị chi phối bởi **văn hóa** và **độ tuổi**.
+	    -  Để thực sự làm ai đó sợ hãi, cần khai thác vào những nỗi sợ thời thơ ấu mà player tưởng đã quên, hoặc tác động vào nỗi sợ cá nhân. **Vì thế sẽ không thể tạo ra một tựa game dọa được tất cả mọi người, mà phải nhắm vào một tệp khán giả cụ thể.** 
+<br>  
+	- **3 Yếu tố của một game kinh dị tốt**
+		1. Nhịp độ chậm và có tính toán (Slow Pacing)
+			- Tạo ra sự bất an thông qua việc kéo dài trạng thái chờ đợi.
+			- Nỗi lo âu sẽ được khuyếch đại khi tâm trí người chơi tự lấp đầy những khoảng trống của sự chờ đợi bằng những kịch bản tồi tệ họ tự tưởng tượng.
+		<br>
+		2. Thiết kế không gian gây ngột ngạt
 			- **Giới hạn khả năng di chuyển:** loại bỏ không gian né tránh, make us feel that we're not in control.
 			- **Ép buộc đối mặt** Trong những hành lang dài, người chơi không thể đi vòng qua mối nguy hiểm; họ buộc phải đối diện trực tiếp với nỗi sợ
 			- **Make the monster seem bigger and stand out** 
 		<br>
-	3. Cách sử dụng ánh sáng/bóng tối
-		- Ánh sáng là công cụ tốt nhất để khai thác **The fear of the Unknown.** Khi tầm nhìn bị hạn chế, não phải nỗ lực  giải mã những hình khối mập mờ trong bóng tối, từ đó tạo ra cảm giác lo âu liên tục.
-            <br>
-        Các kiểu sử dụng ánh sáng:
-        - **Direct Lighting - Resident Evil 5:**  Tại E3 2009, Capcom cố gắng quảng bá phân đoạn đường hầm tối tăm là 1 trong những điểm nhấn sợ hãi, nhưng phần lớn thời gian game diễn ra dưới ánh nắng rực rỡ. Khi mọi thứ quá rõ ràng, người chơi cảm thấy an toàn về mặt tâm lý, đó là lý do RE5 thất bại trong việc tạo ra nỗi sợ so với các bản tiền nhiệm.
-        - **Functional Lighting - Amnesia & Silent Hill:** Ánh sáng trở thành một cơ chế lối chơi. Trong *Amesia*, bóng tối gây insanity, buộc người chơi phải tìm nguồn sáng, nhưng ánh sáng lại khiến họ dễ bị phát hiện. Trong *Silent Hill*, chiếc đèn pin là hy vọng, nhưng cũng thu hút kẻ thù.
-        - **Ánh sáng chiến thuật - Lone Survivor:** Game cho phép sử dụng pháo sáng như một công cụ tạm thời để đẩy lùi kẻ thù, tạo ra sự đánh đổi giữa tài nguyên và sự an toàn.
-            <br>
-    > Nhịp độ chậm rãi để xây dựng sự lo âu, không gian ngột ngạt để giới hạn quyền kiểm soát, và ánh sáng có tính toán để kể chuyện tốt nhất.
-        
-     Hãy luôn tự hỏi: **"Môi trường này có đang bổ trợ cho mục tiêu trải nghiệm của nhân vật không?"**
-     <br>
+		3. Cách sử dụng ánh sáng/bóng tối
+			Ánh sáng là công cụ tốt nhất để khai thác **The fear of the Unknown.** Khi tầm nhìn bị hạn chế, não phải nỗ lực  giải mã những hình khối mập mờ trong bóng tối, từ đó tạo ra cảm giác lo âu liên tục. 
+			<br>
+		    Các kiểu sử dụng ánh sáng:
+		    - **Direct Lighting - Resident Evil 5:**  Tại E3 2009, Capcom cố gắng quảng bá phân đoạn đường hầm tối tăm là 1 trong những điểm nhấn sợ hãi, nhưng phần lớn thời gian game diễn ra dưới ánh nắng rực rỡ. Khi mọi thứ quá rõ ràng, người chơi cảm thấy an toàn về mặt tâm lý, đó là lý do RE5 thất bại trong việc tạo ra nỗi sợ so với các bản tiền nhiệm.
+		    - **Functional Lighting - Amnesia & Silent Hill:** Ánh sáng trở thành một cơ chế lối chơi. Trong *Amesia*, bóng tối gây insanity, buộc người chơi phải tìm nguồn sáng, nhưng ánh sáng lại khiến họ dễ bị phát hiện. Trong *Silent Hill*, chiếc đèn pin là hy vọng, nhưng cũng thu hút kẻ thù.
+		    - **Ánh sáng chiến thuật - Lone Survivor:** Game cho phép sử dụng pháo sáng như một công cụ tạm thời để đẩy lùi kẻ thù, tạo ra sự đánh đổi giữa tài nguyên và sự an toàn.
+	
+			> Nhịp độ chậm rãi để xây dựng sự lo âu, không gian ngột ngạt để giới
+			hạn quyền kiểm soát, và ánh sáng có tính toán để kể chuyện tốt nhất.
+	
+	<br>
+	
    - **Tại sao RPG maker kinh dị lại chọn Puzzle thay vì Combat/Action?**
-    	- Bản chất RPG là game nhập vai, thế mạnh nằm ở xây dựng thế giới và nhân vật để người chơi đồng cảm, **Nhân vật sợ hãi điều gì thì người chơi cũng sợ hãi điều đó.**
-    	- Nếu chọn cơ chế Combat, nhân vật sẽ mạnh lên nhờ Level up, điều này có thể tiêu diệt nổi sợ của player vì nó sẽ khiến họ tin rằng rồi họ sẽ đủ sức đánh bại thế lực đáng sợ đó.
-    	- Ở Puzzles, thay vì chiến đấu, game designer có thể giấu cốt truyện vào các câu đố, giúp định hình nhân vật, bối cảnh, câu chuyện một cách tự nhiên.
+	    - Bản chất RPG là game nhập vai, thế mạnh nằm ở xây dựng thế giới và nhân vật để người chơi đồng cảm, **Nhân vật sợ hãi điều gì thì người chơi cũng sợ hãi điều đó.**
+	    - Nếu chọn cơ chế Combat, nhân vật sẽ mạnh lên nhờ Level up, điều này có thể tiêu diệt nổi sợ của player vì nó sẽ khiến họ tin rằng rồi họ sẽ đủ sức đánh bại thế lực đáng sợ đó.
+	    - Ở Puzzles, thay vì chiến đấu, game designer có thể giấu cốt truyện vào các câu đố, giúp định hình nhân vật, bối cảnh, câu chuyện một cách tự nhiên.
+
 <br>
-7. **TheOdie - Bài 3 (Files and Overview)**: Đọc cốt truyện của Jake và Eric. Tải template game để chuẩn bị thực hành.
-    Xem tài liệu của game tại: [[So, What should i make..]]
+
+6. **TheOdie - Bài 3 (Files and Overview)**: Đọc cốt truyện của Jake và Eric. Tải template game để chuẩn bị thực hành.
+	    Xem tài liệu của game tại: [[So, What should i make..]]
     <br>
     - **Tại sao lại cần tài liệu?**
         - Khi làm game, bộ não sẽ liên tục sinh ra các ý tưởng mới. Những thay đổi này có thể sẽ là constructive giúp game hay hơn, những nó cũng có thể là destructive khiến dự án bị phình to, mất đi định hướng ban đầu và mãi mãi không bao giờ hoàn thành.
@@ -120,7 +123,7 @@ tags:
         - Nó hoạt động như một "mỏ neo". Mỗi khi nãy ra ý tưởng hoặc định vẽ thêm một cơ chế phức, hãy mở file tài liệu ra để kiểm tra xem nó có còn đi đúng hướng mục tiêu ban đầu hay không.
         <br>
     - **Nguyên tắc thiết kế cốt truyện:** Giữ câu chuyện đơn giản, mục tiêu là phải giải thích được cốt truyện game cho người khác hiểu trong vòng **5 phút**
-        ---
+        <br>
     - **Hệ thống 4 loại thử thách sẽ xây dựng:**
     Các câu đố cần được thiết kế **Tăng dần từ dễ đến khó** để tạo độ căng thẳng phù hợp và giữ chân người chơi, tránh làm họ ức chế và bỏ game ngay từ đầu.
     
