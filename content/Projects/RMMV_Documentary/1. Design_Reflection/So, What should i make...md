@@ -12,9 +12,10 @@ aliases:
   - "RMMV_Documentary/So, What should i make..."
 ---
 
-> [!WARNING] 🌿 Bản thảo đang hoàn thiện (Work in Progress - WIP)
+> [!WARNING] ⏳ Bản thảo đang hoàn thiện (Work in Progress - WIP)
 > *Ghi chú này đang được bổ sung và cập nhật nội dung liên tục cùng tiến độ dự án.*
 
+[[Game Idea log|Ghi chú cá nhân]]
 # Objective
 
 - an minimum viable product of a game produced in RPG Maker
@@ -69,4 +70,5 @@ Type of Puzzles
 
 
 ---
+
 

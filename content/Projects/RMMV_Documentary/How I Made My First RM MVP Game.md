@@ -9,7 +9,7 @@ tags:
   - WIP
 ---
 
-> [!WARNING] 🌿 Bản thảo đang hoàn thiện (Work in Progress - WIP)
+> [!WARNING] ⏳ Bản thảo đang hoàn thiện (Work in Progress - WIP)
 > *Báo cáo này đang được cập nhật tổng kết theo từng mốc thử nghiệm của dự án.*
 
 # 1. Introduction: The Expectation vs. Prototyping Speed
