@@ -18,6 +18,24 @@ div {
   font-family: var(--bodyFont);
 }
 
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// 🖋️ Pretty Typography: Tránh chữ mồ côi (orphans) & dòng góa phụ (widows)
+p,
+li,
+blockquote,
+figcaption {
+  text-wrap: pretty;
+  orphans: 3;
+  widows: 3;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
 h1,
 h2,
 h3,
@@ -27,6 +45,8 @@ h6,
 .article-title {
   font-family: var(--headerFont) !important;
   font-weight: 700;
+  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 // Spacing for lists & nested items
