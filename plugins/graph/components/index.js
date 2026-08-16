@@ -194,11 +194,28 @@ var graph_inline_default = `
       var focusOnHover = cfg.focusOnHover ?? true;
       var enableRadial = cfg.enableRadial ?? false;
 
+      // Obsidian-style Graph Filters from localStorage
+      var graphFilters = { tags: true, attachments: false, existingFiles: true, orphans: true };
+      try {
+        var savedFilters = JSON.parse(localStorage.getItem("quartz-graph-filters") || "{}");
+        graphFilters = Object.assign(graphFilters, savedFilters);
+      } catch (e) {}
+
+      if (graphFilters.tags !== undefined) showTags = graphFilters.tags;
+
+      var isAttachment = function(p) {
+        return /\.(png|jpe?g|webp|gif|svg|mp4|pdf|mp3|zip)$/i.test(p) || p.startsWith("assets/") || p.startsWith("static/");
+      };
+
       var contentData;
       try {
         var rawData = await fetchData;
         contentData = new Map();
-        for (var k in rawData) contentData.set(Fu(k), rawData[k]);
+        for (var k in rawData) {
+          if (!graphFilters.attachments && isAttachment(k)) continue;
+          if (!graphFilters.tags && k.startsWith("tags/")) continue;
+          contentData.set(Fu(k), rawData[k]);
+        }
       } catch (err) {
         console.error("[Graph] Data load error:", err);
         return function() {};
@@ -209,12 +226,23 @@ var graph_inline_default = `
       var allLinks = [];
       var tagNodes = [];
       var knownKeys = new Set(contentData.keys());
+      var ghostKeys = new Set();
 
       contentData.forEach(function(item, slug) {
+        if (!graphFilters.attachments && isAttachment(slug)) return;
+        if (!graphFilters.tags && slug.startsWith("tags/")) return;
+
         var links = item.links || [];
         for (var i = 0; i < links.length; i++) {
           var target = Fu(links[i]);
+          if (!graphFilters.attachments && isAttachment(target)) continue;
+          if (!graphFilters.tags && target.startsWith("tags/")) continue;
+
           if (knownKeys.has(target)) {
+            allLinks.push({ source: slug, target: target });
+          } else if (!graphFilters.existingFiles) {
+            // Unresolved ghost link
+            ghostKeys.add(target);
             allLinks.push({ source: slug, target: target });
           }
         }
@@ -255,8 +283,31 @@ var graph_inline_default = `
           queue = nextQueue;
         }
       } else {
-        knownKeys.forEach(function(k) { activeSlugs.add(k); });
-        for (var tg = 0; tg < tagNodes.length; tg++) activeSlugs.add(tagNodes[tg]);
+        knownKeys.forEach(function(k) {
+          if (!graphFilters.attachments && isAttachment(k)) return;
+          if (!graphFilters.tags && k.startsWith("tags/")) return;
+          activeSlugs.add(k);
+        });
+        if (showTags) {
+          for (var tg = 0; tg < tagNodes.length; tg++) activeSlugs.add(tagNodes[tg]);
+        }
+        if (!graphFilters.existingFiles) {
+          ghostKeys.forEach(function(gk) { activeSlugs.add(gk); });
+        }
+      }
+
+      // Filter orphan nodes if orphans filter is OFF
+      if (!graphFilters.orphans) {
+        var connectedSlugs = new Set();
+        for (var lk = 0; lk < allLinks.length; lk++) {
+          connectedSlugs.add(allLinks[lk].source);
+          connectedSlugs.add(allLinks[lk].target);
+        }
+        var filteredSlugs = new Set();
+        activeSlugs.forEach(function(s) {
+          if (connectedSlugs.has(s)) filteredSlugs.add(s);
+        });
+        activeSlugs = filteredSlugs;
       }
 
       var simulationNodes = [];
@@ -760,6 +811,9 @@ var graph_inline_default = `
     } else {
       onNavigate({ detail: { url: we() } });
     }
+
+    window.__quartzReRenderGlobalGraph = openGlobal;
+    window.__quartzReRenderLocalGraph = refreshLocal;
 
     document.addEventListener("prenav", clearCleanups);
     document.addEventListener("nav", onNavigate);
