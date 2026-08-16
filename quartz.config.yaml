@@ -18,8 +18,12 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Shantell Sans
-      body: Shantell Sans
+      header:
+        name: Shantell Sans
+        weights: [300, 400, 600, 700]
+      body:
+        name: Shantell Sans
+        weights: [300, 400, 600, 700]
       code: IBM Plex Mono
     colors:
       lightMode:

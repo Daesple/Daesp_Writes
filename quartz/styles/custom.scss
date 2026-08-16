@@ -351,4 +351,80 @@ h6,
   }
 }
 
+// ==========================================
+// 📂 Explorer (Sidebar File Tree) - Font Light
+// ==========================================
+.explorer {
+  font-weight: 300 !important;
+
+  .title-button,
+  .title-button h2,
+  h2 {
+    font-weight: 300 !important;
+  }
+
+  .folder-container,
+  .folder-button,
+  .folder-title {
+    font-weight: 300 !important;
+  }
+
+  .nav-file-title,
+  a.nav-file-title,
+  li a,
+  a {
+    font-weight: 300 !important;
+  }
+
+  span,
+  li {
+    font-weight: 300 !important;
+  }
+}
+
+// ==========================================
+// 📑 Table of Contents (TOC) - Font Light
+// ==========================================
+.toc {
+  font-weight: 300 !important;
+
+  .toc-header,
+  .toc-header h3,
+  h3 {
+    font-weight: 300 !important;
+  }
+
+  .toc-content,
+  .toc-content a,
+  ul,
+  li,
+  li a,
+  a {
+    font-weight: 300 !important;
+  }
+}
+
+// ==========================================
+// 🕸️ Graph View (Title & Labels) - Font Light
+// ==========================================
+.graph {
+  font-weight: 300 !important;
+
+  h3,
+  .graph-outer h3 {
+    font-weight: 300 !important;
+  }
+}
+
+.graph-outer,
+.graph-container,
+.global-graph-outer,
+.global-graph-container {
+  text,
+  span {
+    font-weight: 300 !important;
+  }
+}
+
+
 
