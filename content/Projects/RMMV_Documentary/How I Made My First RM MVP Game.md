@@ -3,6 +3,7 @@ title: How I Made My First RM MVP Game
 description: "Báo cáo tổng kết toàn diện quá trình tạo mẫu game MVP trên nền tảng RPG Maker MV."
 status: wip
 tags:
+  - project
   - RMMV
   - Game-design
   - Report

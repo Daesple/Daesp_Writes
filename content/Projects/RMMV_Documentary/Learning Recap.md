@@ -2,6 +2,7 @@
 title: Learning Recap
 description: "Tổng hợp toàn bộ quá trình học và thực hành RMMV từ 2 nguồn: RPG Maker MV Beginner Tutorial và RMMV How to Make a Horror Puzzle Game."
 tags:
+  - project
   - RMMV
   - Game-design
   - Learning

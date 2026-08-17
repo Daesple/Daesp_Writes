@@ -3,6 +3,7 @@ title: "Game Concept: Papilio"
 description: "Bản thảo ý tưởng, cốt truyện và phân tích mục tiêu cho tựa game kinh dị giải đố MVP 'Papilio'."
 status: wip
 tags:
+  - project
   - Game-design
   - Horror
   - Concept

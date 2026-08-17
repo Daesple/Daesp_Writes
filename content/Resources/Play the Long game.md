@@ -3,7 +3,7 @@ title: Play the Long Game
 description: "-"
 status: Planned
 tags:
-  - Resources
+  - resource
 ---
 
 > [!NOTE] 📋 Ghi chú đang ở giai đoạn lên kế hoạch
