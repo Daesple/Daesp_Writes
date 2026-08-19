@@ -471,9 +471,13 @@ var graph_inline_default = `
           }
         }
 
-        // Title/Label alpha and highlighting (Obsidian style)
-        var baseScale = 1 / scaleFactor;
+        // Title/Label alpha and scaling (Obsidian semantic zoom & fade)
+        var zoomK = currentZoom.k || 1.0;
+        var baseScale = (1 / scaleFactor) * Math.pow(zoomK, -0.6);
         var hoverScale = baseScale * 1.12;
+        var zoomAlpha = Math.max(0, Math.min(1, (zoomK - 0.42) / 0.45));
+        var leafAlpha = Math.max(0, Math.min(1, (zoomK - 0.70) / 0.45));
+
         for (var i = 0; i < nodeItems.length; i++) {
           var item = nodeItems[i];
           var nid = item.simulationData.id;
@@ -498,22 +502,22 @@ var graph_inline_default = `
               item.label.scale.set(baseScale);
             }
           } else {
-            // Default view:
+            // Default view with Zoom-level fade:
             var isCurrent = (nid === currentKey);
             if (isCurrent) {
-              item.label.alpha = 1.0;
+              item.label.alpha = Math.max(0.2, zoomAlpha);
               item.label.scale.set(hoverScale);
               item.label.style.fill = colorSecondary;
               item.label.style.fontWeight = "bold";
             } else if (deg >= 2) {
-              // Hub nodes: high visibility
-              item.label.alpha = 0.9;
+              // Hub nodes: appear at medium zoom
+              item.label.alpha = zoomAlpha * 0.9;
               item.label.scale.set(baseScale);
               item.label.style.fill = colorDark;
               item.label.style.fontWeight = "normal";
             } else {
-              // Leaf nodes: subtle visibility
-              item.label.alpha = 0.7;
+              // Leaf nodes: appear as you zoom in closer
+              item.label.alpha = leafAlpha * 0.75;
               item.label.scale.set(baseScale);
               item.label.style.fill = colorDark;
               item.label.style.fontWeight = "normal";
@@ -652,11 +656,12 @@ var graph_inline_default = `
       if (enableZoom) {
         var zoomBehavior = d3.zoom()
           .extent([[0, 0], [width, height]])
-          .scaleExtent([0.2, 4.5])
+          .scaleExtent([0.15, 5.0])
           .on("zoom", function(event) {
             currentZoom = event.transform;
             mainStage.scale.set(currentZoom.k, currentZoom.k);
             mainStage.position.set(currentZoom.x, currentZoom.y);
+            if (!isDragging) updateVisuals();
           });
         d3.select(app.canvas).call(zoomBehavior);
       }
