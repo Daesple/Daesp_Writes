@@ -95,6 +95,42 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
   // graph filters
   componentResources.afterDOMLoaded.push(graphFilterScript)
 
+  // Lenis Kinetic Smooth Scroll for reading notes
+  componentResources.afterDOMLoaded.push(`
+    (function() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/lenis@1.1.18/dist/lenis.min.js';
+      script.async = true;
+      script.onload = () => {
+        if (typeof Lenis === 'undefined') return;
+        const lenis = new Lenis({
+          duration: 1.15,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: 'vertical',
+          gestureOrientation: 'vertical',
+          smoothWheel: true,
+          wheelMultiplier: 0.95,
+          touchMultiplier: 1.5,
+          infinite: false,
+        });
+
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        document.addEventListener('nav', () => {
+          lenis.resize();
+        });
+
+        window.lenis = lenis;
+      };
+      document.head.appendChild(script);
+    })();
+  `)
+
   if (cfg.analytics?.provider === "google") {
     const tagId = cfg.analytics.tagId
     componentResources.afterDOMLoaded.push(`

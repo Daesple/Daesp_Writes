@@ -18,10 +18,25 @@ div {
   font-family: var(--bodyFont);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+// Smooth anchor scroll target offset
+h1, h2, h3, h4, h5, h6, [id] {
+  scroll-margin-top: 5rem;
 }
 
 // 🖋️ Pretty Typography: Tránh chữ mồ côi (orphans) & dòng góa phụ (widows)
@@ -847,6 +862,28 @@ a.tag-link,
       height: 0 !important;
     }
   }
+}
+
+// ==========================================
+// 🌊 Lenis Kinetic Smooth Scroll
+// ==========================================
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent],
+.global-graph-outer,
+.graph-outer {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 

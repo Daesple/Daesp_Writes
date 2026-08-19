@@ -415,6 +415,7 @@ var graph_inline_default = `
       var dragStartTime = 0;
       var isDragging = false;
       var currentZoom = d3.zoomIdentity;
+      var targetZoom = d3.zoomIdentity;
 
       function getNodeColor(node) {
         if (node.id === currentKey) return colorSecondary;
@@ -657,11 +658,17 @@ var graph_inline_default = `
         var zoomBehavior = d3.zoom()
           .extent([[0, 0], [width, height]])
           .scaleExtent([0.15, 5.0])
+          .wheelDelta(function(event) {
+            return -event.deltaY * (event.deltaMode === 1 ? 0.05 : event.deltaMode ? 1 : 0.002);
+          })
           .on("zoom", function(event) {
-            currentZoom = event.transform;
-            mainStage.scale.set(currentZoom.k, currentZoom.k);
-            mainStage.position.set(currentZoom.x, currentZoom.y);
-            if (!isDragging) updateVisuals();
+            targetZoom = event.transform;
+            if (isDragging) {
+              currentZoom = targetZoom;
+              mainStage.scale.set(currentZoom.k, currentZoom.k);
+              mainStage.position.set(currentZoom.x, currentZoom.y);
+              updateVisuals();
+            }
           });
         d3.select(app.canvas).call(zoomBehavior);
       }
@@ -669,6 +676,21 @@ var graph_inline_default = `
       var isStopped = false;
       function onFrame() {
         if (!isStopped) {
+          // Smooth inertia lerp for zoom & pan in graph view
+          if (!isDragging) {
+            var diffK = targetZoom.k - currentZoom.k;
+            var diffX = targetZoom.x - currentZoom.x;
+            var diffY = targetZoom.y - currentZoom.y;
+            if (Math.abs(diffK) > 0.0002 || Math.abs(diffX) > 0.02 || Math.abs(diffY) > 0.02) {
+              var lerp = 0.2;
+              currentZoom = d3.zoomIdentity
+                .translate(currentZoom.x + diffX * lerp, currentZoom.y + diffY * lerp)
+                .scale(currentZoom.k + diffK * lerp);
+              mainStage.scale.set(currentZoom.k, currentZoom.k);
+              mainStage.position.set(currentZoom.x, currentZoom.y);
+              updateVisuals();
+            }
+          }
           for (var i = 0; i < nodeItems.length; i++) {
             var item = nodeItems[i];
             var nx = item.simulationData.x;
