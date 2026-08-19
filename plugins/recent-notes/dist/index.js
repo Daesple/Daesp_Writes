@@ -518,6 +518,7 @@ var RecentNotes_default = ((userOpts) => {
       .filter((p2) => !opts.hideTagPages || !isTagPageSlug(p2.slug))
       .filter((p2) => !opts.hideFolderPages || !isFolderPageSlug(p2.slug))
       .filter((p2) => !p2.slug?.toLowerCase().startsWith("topics/"))
+      .filter((p2) => (p2.frontmatter?.status || "").toLowerCase().trim() !== "planned")
       .filter(opts.filter)
       .sort(opts.sort);
     const remaining = Math.max(0, pages.length - opts.limit);
