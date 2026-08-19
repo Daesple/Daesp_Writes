@@ -610,17 +610,25 @@ var graph_inline_default = `
           return null;
         };
 
+        var lastDragX = 0, lastDragY = 0, lastDragTime = 0;
+        var nodeVx = 0, nodeVy = 0;
+
         var dragBehavior = d3.drag()
           .container(app.canvas)
           .subject(findSubject)
           .on("start", function(event) {
-            if (!event.active) sim.alphaTarget(1).restart();
+            if (!event.active) sim.alphaTarget(0.8).restart();
             event.subject.fx = event.subject.x;
             event.subject.fy = event.subject.y;
             var curX = (event.x - currentZoom.x) / currentZoom.k - width / 2;
             var curY = (event.y - currentZoom.y) / currentZoom.k - height / 2;
             event.subject.__dragOffset = { x: curX - event.subject.x, y: curY - event.subject.y };
             dragStartTime = Date.now();
+            lastDragX = curX;
+            lastDragY = curY;
+            lastDragTime = performance.now();
+            nodeVx = 0;
+            nodeVy = 0;
             isDragging = true;
             hoveredNodeId = event.subject.id;
           })
@@ -629,15 +637,26 @@ var graph_inline_default = `
             var curY = (event.y - currentZoom.y) / currentZoom.k - height / 2;
             event.subject.fx = curX - event.subject.__dragOffset.x;
             event.subject.fy = curY - event.subject.__dragOffset.y;
+            var now = performance.now();
+            var dt = Math.max(now - lastDragTime, 8);
+            nodeVx = ((curX - lastDragX) / dt) * 16.6;
+            nodeVy = ((curY - lastDragY) / dt) * 16.6;
+            lastDragX = curX;
+            lastDragY = curY;
+            lastDragTime = now;
           })
           .on("end", function(event) {
-            if (!event.active) sim.alphaTarget(0);
+            if (!event.active) sim.alphaTarget(0.2);
+            // Apply drag momentum inertia to node velocity
+            event.subject.vx = (event.subject.vx || 0) + nodeVx * 0.85;
+            event.subject.vy = (event.subject.vy || 0) + nodeVy * 0.85;
             event.subject.fx = null;
             event.subject.fy = null;
             isDragging = false;
+            setTimeout(function() { if (!isDragging) sim.alphaTarget(0); }, 300);
             updateActiveSet(null);
             updateVisuals();
-            if (Date.now() - dragStartTime < 400) {
+            if (Date.now() - dragStartTime < 400 && Math.abs(nodeVx) < 1.2 && Math.abs(nodeVy) < 1.2) {
               window.location.href = $u(event.subject.id);
             }
           });
@@ -653,7 +672,7 @@ var graph_inline_default = `
         }
       }
 
-      // Zoom behavior
+      // Zoom & Pan behavior
       if (enableZoom) {
         var zoomBehavior = d3.zoom()
           .extent([[0, 0], [width, height]])
@@ -663,12 +682,6 @@ var graph_inline_default = `
           })
           .on("zoom", function(event) {
             targetZoom = event.transform;
-            if (isDragging) {
-              currentZoom = targetZoom;
-              mainStage.scale.set(currentZoom.k, currentZoom.k);
-              mainStage.position.set(currentZoom.x, currentZoom.y);
-              updateVisuals();
-            }
           });
         d3.select(app.canvas).call(zoomBehavior);
       }
@@ -677,19 +690,17 @@ var graph_inline_default = `
       function onFrame() {
         if (!isStopped) {
           // Smooth inertia lerp for zoom & pan in graph view
-          if (!isDragging) {
-            var diffK = targetZoom.k - currentZoom.k;
-            var diffX = targetZoom.x - currentZoom.x;
-            var diffY = targetZoom.y - currentZoom.y;
-            if (Math.abs(diffK) > 0.0002 || Math.abs(diffX) > 0.02 || Math.abs(diffY) > 0.02) {
-              var lerp = 0.2;
-              currentZoom = d3.zoomIdentity
-                .translate(currentZoom.x + diffX * lerp, currentZoom.y + diffY * lerp)
-                .scale(currentZoom.k + diffK * lerp);
-              mainStage.scale.set(currentZoom.k, currentZoom.k);
-              mainStage.position.set(currentZoom.x, currentZoom.y);
-              updateVisuals();
-            }
+          var diffK = targetZoom.k - currentZoom.k;
+          var diffX = targetZoom.x - currentZoom.x;
+          var diffY = targetZoom.y - currentZoom.y;
+          if (Math.abs(diffK) > 0.0001 || Math.abs(diffX) > 0.01 || Math.abs(diffY) > 0.01) {
+            var lerp = 0.22;
+            currentZoom = d3.zoomIdentity
+              .translate(currentZoom.x + diffX * lerp, currentZoom.y + diffY * lerp)
+              .scale(currentZoom.k + diffK * lerp);
+            mainStage.scale.set(currentZoom.k, currentZoom.k);
+            mainStage.position.set(currentZoom.x, currentZoom.y);
+            updateVisuals();
           }
           for (var i = 0; i < nodeItems.length; i++) {
             var item = nodeItems[i];
