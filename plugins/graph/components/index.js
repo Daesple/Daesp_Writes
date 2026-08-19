@@ -90,12 +90,6 @@ var graph_default = `
 // Script implementation
 var graph_inline_default = `
 (function() {
-  function we() {
-    let u = window.location.pathname;
-    if (u.endsWith("/")) u = u.slice(0, -1);
-    if (u.startsWith("/")) u = u.slice(1);
-    return u;
-  }
   function Nu() {
     return typeof document === "undefined" ? "" : document.body?.dataset?.basepath ?? "";
   }
@@ -104,18 +98,25 @@ var graph_inline_default = `
     let a = u.startsWith("/") ? u : "/" + u;
     return t + a;
   }
-  function ft(u, e) {
-    if (u === e || u.endsWith("/" + e)) u = u.slice(0, -e.length);
-    return u;
-  }
-  function _t(u, e) {
-    if (u.startsWith("/")) u = u.substring(1);
-    if (!e && u.endsWith("/")) u = u.slice(0, -1);
-    return u;
-  }
   function Fu(u) {
-    let e = _t(ft(u, "index"), true);
-    return e.length === 0 ? "/" : e;
+    if (!u) return "index";
+    u = u.toLowerCase().trim();
+    let base = Nu().toLowerCase();
+    if (base && u.startsWith(base)) {
+      u = u.substring(base.length);
+    }
+    if (u.startsWith("/")) u = u.substring(1);
+    if (u.endsWith(".html")) u = u.slice(0, -5);
+    if (u.endsWith("/index")) u = u.slice(0, -6);
+    if (u.endsWith("/")) u = u.slice(0, -1);
+    if (u === "" || u === "/") return "index";
+    return u;
+  }
+  function we() {
+    if (document.body && document.body.dataset && document.body.dataset.slug) {
+      return Fu(document.body.dataset.slug);
+    }
+    return Fu(window.location.pathname);
   }
   function ke(u) {
     while (u.firstChild) u.removeChild(u.firstChild);
