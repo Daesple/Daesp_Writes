@@ -2,10 +2,16 @@ import { QuartzComponentProps } from "../../components/types"
 
 export type ConditionPredicate = (props: QuartzComponentProps) => boolean
 
+const isIndex = (props: QuartzComponentProps) => {
+  const slug = props.fileData.slug
+  const fp = props.fileData.filePath ?? ""
+  return slug === "index" || slug === "" || slug === "index.html" || fp.endsWith("index.md")
+}
+
 const builtinConditions: Record<string, ConditionPredicate> = {
-  "is-index": (props) => props.fileData.slug === "index",
-  "index": (props) => props.fileData.slug === "index",
-  "not-index": (props) => props.fileData.slug !== "index",
+  "is-index": isIndex,
+  "index": isIndex,
+  "not-index": (props) => !isIndex(props),
   "has-tags": (props) => {
     const tags = props.fileData.frontmatter?.tags
     return Array.isArray(tags) && tags.length > 0

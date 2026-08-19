@@ -2,6 +2,7 @@
 title: The Unexpected Stage / Sân Khấu Bất Ngờ
 description: An Essay on RPG Maker in 5 Acts
 status: WIP
+date: 2026-08-19T10:30:00
 tags:
   - project
   - mini-essay

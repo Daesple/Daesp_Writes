@@ -50,7 +50,7 @@ plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true
     options:
-      defaultDateType: modified
+      defaultDateType: created
       priority:
         - frontmatter
         - git
@@ -266,7 +266,7 @@ plugins:
     enabled: true
     options:
       title: "📚 Ghi Chú & Bài Viết Mới Nhất"
-      limit: 5
+      limit: 8
       showTags: true
       hideTagPages: true
       hideFolderPages: true

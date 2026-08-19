@@ -2,6 +2,7 @@
 title: Video game khác game truyền thống như thế nào?
 description: Video game không chỉ là “game ngoài đời được đưa lên màn hình”. Khi máy tính có thể vận hành luật chơi, nhớ mọi hành động và phản hồi tức thì, thời gian, thất bại, lựa chọn và hậu quả sẽ trở thành chất liệu để tạo ra những trải nghiệm cho người chơi.
 status: done
+date: 2026-08-18
 tags:
   - resource
   - mini-essay
