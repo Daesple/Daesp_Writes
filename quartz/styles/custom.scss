@@ -776,6 +776,79 @@ a.tag-link,
   }
 }
 
+// ==========================================
+// 🔗 In-Body Backlinks Component Styling
+// ==========================================
+.center .backlinks,
+.page-body .backlinks {
+  margin: 3rem 0 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+
+  > h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:before {
+      content: "🔗";
+      font-size: 1.1rem;
+    }
+  }
+
+  .overflow,
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    max-height: none;
+    overflow-y: visible;
+
+    li:not(.overflow-end) {
+      margin: 0;
+      padding: 0.5rem 0.85rem;
+      background: var(--bg);
+      border: 1px solid var(--lightgray);
+      border-radius: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+      &:hover {
+        border-color: var(--secondary);
+        background: var(--lightgray);
+        transform: translateX(4px);
+      }
+
+      a.internal {
+        font-weight: 600;
+        color: var(--dark);
+        text-decoration: none;
+        display: block;
+
+        &:hover {
+          color: var(--secondary);
+        }
+      }
+    }
+
+    li.overflow-end {
+      display: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      background: transparent !important;
+      height: 0 !important;
+    }
+  }
+}
+
 
 
 

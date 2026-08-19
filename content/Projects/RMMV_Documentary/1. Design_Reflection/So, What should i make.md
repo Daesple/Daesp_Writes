@@ -4,10 +4,6 @@ description: "Bản thảo ý tưởng, cốt truyện và phân tích mục ti�
 status: wip
 tags:
   - project
-  - Game-design
-  - Horror
-  - Concept
-  - WIP
 aliases:
   - "So, What should i make.."
   - "So, What should i make..."
@@ -16,6 +12,8 @@ aliases:
   - "RMMV_Documentary/So, What should i make..."
   - "/so,-what-should-i-make.."
 ---
+
+**Chủ đề liên quan:** [[Game Design]] · [[Horror]] · [[Concept]]
 
 > [!WARNING] ⏳ Bản thảo đang hoàn thiện (Work in Progress - WIP)
 > *Ghi chú này đang được bổ sung và cập nhật nội dung liên tục cùng tiến độ dự án.*

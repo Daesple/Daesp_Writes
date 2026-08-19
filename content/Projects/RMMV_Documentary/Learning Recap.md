@@ -3,9 +3,6 @@ title: Learning Recap
 description: "Tổng hợp toàn bộ quá trình học và thực hành RMMV từ 2 nguồn: RPG Maker MV Beginner Tutorial và RMMV How to Make a Horror Puzzle Game."
 tags:
   - project
-  - RMMV
-  - Game-design
-  - Learning
   - MOC
 aliases:
   - "/RMMV_Documentary/learning-recap"
@@ -13,6 +10,8 @@ aliases:
 ---
 
 # 📖 Learning Recap (Map of Content)
+
+**Chủ đề liên quan:** [[RMMV]] · [[Game Design]] · [[Learning]]
 
 Trang tổng hợp toàn bộ lộ trình và ghi chép học tập làm game kinh dị giải đố trên nền tảng RPG Maker MV (RMMV).
 

@@ -1,9 +1,6 @@
 ---
 title: Daesp's Notebook
 description: Nơi lưu trữ, ghi chép và nghiên cứu của Bảo
-tags:
-  - homepage
-  - "#index"
 ---
 ## 🏷️ Quy Ước Trạng Thái Ghi Chú
 - 📋 **`Planned`**: Đã lên lịch viết.

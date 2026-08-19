@@ -4,13 +4,13 @@ description: An Essay on RPG Maker in 5 Acts
 status: WIP
 tags:
   - project
-  - RMMV
-  - Game-design
   - mini-essay
 ---
 
 # The Unexpected Stage / Sân Khấu Bất Ngờ
 ### *An Essay on RPG Maker in 5 Acts*
+
+**Chủ đề liên quan:** [[RMMV]] · [[Game Design]]
 
 > [!WARNING] ⏳ Draft & Disclaimer
 > This is an unofficial version of the essay, only outline and some WIPs!!  

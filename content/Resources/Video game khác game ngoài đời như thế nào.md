@@ -5,9 +5,10 @@ status: done
 tags:
   - resource
   - mini-essay
-  - Game-design
-  - Storytelling
 ---
+
+**Chủ đề liên quan:** [[Game Design]] · [[Storytelling]]
+
 # Let's take a look at the logic chain
 
 Change in kind là gì? -> Video game làm được gì mà Game ngoài đời thì không? Kết luận 1: Video game khác "Game ngoài đời + số hóa" -> So what's the matter? -> Kết luận 2: Dám nghĩ tới đâu và nghĩ như thế nào.

@@ -4,11 +4,10 @@ description: "Báo cáo tổng kết toàn diện quá trình tạo mẫu game M
 status: wip
 tags:
   - project
-  - RMMV
-  - Game-design
-  - Report
-  - WIP
+  - mini-essay
 ---
+
+**Chủ đề liên quan:** [[RMMV]] · [[Game Design]]
 
 > [!NOTE] 📋 Ghi chú đang ở giai đoạn lên kế hoạch
 > *Bài viết này đang ở giai đoạn chuẩn bị và tổng hợp tư liệu. Nội dung sẽ được cập nhật sau.*

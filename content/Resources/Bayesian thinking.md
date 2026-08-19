@@ -11,6 +11,8 @@ tags:
 
 # Tư duy Bayes (Bayesian Thinking)
 
+**Chủ đề liên quan:** 
+
 ### 🔗 Nguồn tư liệu (Source Links):
 - [Veritasium - The Bayesian Trap](https://youtu.be/BrK7X_XlGB8)
 - [3Blue1Brown - Bayes Theorem & Probability](https://youtu.be/R13BD8qKeTg)

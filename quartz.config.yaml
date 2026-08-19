@@ -204,9 +204,11 @@ plugins:
         grow: true
   - source: "@quartz-community/backlinks"
     enabled: true
+    options:
+      hideWhenEmpty: true
     layout:
-      position: right
-      priority: 50
+      position: afterBody
+      priority: 15
   - source: "@quartz-community/article-title"
     enabled: true
     layout:
