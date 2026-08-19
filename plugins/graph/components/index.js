@@ -355,6 +355,17 @@ var graph_inline_default = `
       var colorLight = resolveColor(computedStyle.getPropertyValue("--light").trim(), isDark ? "#16161a" : "#faf8f8");
       var fontFam = computedStyle.getPropertyValue("--bodyFont").trim() || "inherit";
 
+      // Color coding palette
+      var colorCurrent = colorSecondary; // Current active page (Purple)
+      var colorProjects = resolveColor(isDark ? "#60a5fa" : "#2563eb"); // Blue for Projects / Game Dev
+      var colorResources = resolveColor(isDark ? "#34d399" : "#059669"); // Emerald for Resources / Articles
+      var colorTopics = resolveColor(isDark ? "#fbbf24" : "#d97706"); // Amber for Topics / Hubs / MOCs
+      var colorTags = resolveColor(isDark ? "#f472b6" : "#e11d48"); // Rose/Pink for Tags
+      var colorDefault = resolveColor(isDark ? "#94a3b8" : "#64748b"); // Slate Gray for General
+
+      // High-contrast Hover Text Highlight Color (Sky Blue / Cyan to contrast against purple lines)
+      var colorHoverHighlight = resolveColor(isDark ? "#38bdf8" : "#0284c7");
+
       var app = new PIXI.Application();
       await app.init({
         width: width,
@@ -418,10 +429,13 @@ var graph_inline_default = `
       var targetZoom = d3.zoomIdentity;
 
       function getNodeColor(node) {
-        if (node.id === currentKey) return colorSecondary;
-        if (node.id.startsWith("tags/")) return colorTertiary;
-        if (visited.has(node.id)) return colorTertiary;
-        return colorGray;
+        var slug = node.id.toLowerCase();
+        if (node.id === currentKey) return colorCurrent;
+        if (slug.startsWith("tags/")) return colorTags;
+        if (slug.startsWith("topics/") || (node.tags && node.tags.includes("moc"))) return colorTopics;
+        if (slug.startsWith("projects/")) return colorProjects;
+        if (slug.startsWith("resources/")) return colorResources;
+        return colorDefault;
       }
 
       function updateActiveSet(id) {
@@ -453,12 +467,12 @@ var graph_inline_default = `
         for (var i = 0; i < linkItems.length; i++) {
           var item = linkItems[i];
           if (hoveredNodeId !== null) {
-            item.alpha = item.active ? 0.95 : 0.05;
-            item.color = item.active ? colorSecondary : colorLineDefault;
+            item.targetAlpha = item.active ? 0.95 : 0.04;
+            item.targetColor = item.active ? colorSecondary : colorLineDefault;
           } else {
             // Visible, crisp default lines (20-30% brighter/darker than background)
-            item.alpha = 0.6;
-            item.color = colorLineDefault;
+            item.targetAlpha = 0.6;
+            item.targetColor = colorLineDefault;
           }
         }
 
@@ -466,16 +480,15 @@ var graph_inline_default = `
         for (var i = 0; i < nodeItems.length; i++) {
           var item = nodeItems[i];
           if (hoveredNodeId !== null && focusOnHover) {
-            item.gfx.alpha = item.active ? 1.0 : 0.15;
+            item.targetGfxAlpha = item.active ? 1.0 : 0.12;
           } else {
-            item.gfx.alpha = 1.0;
+            item.targetGfxAlpha = 1.0;
           }
         }
 
         // Title/Label alpha and scaling (Obsidian semantic zoom & fade)
         var zoomK = currentZoom.k || 1.0;
         var baseScale = (1 / scaleFactor) * Math.pow(zoomK, -0.6);
-        var hoverScale = baseScale * 1.12;
         var zoomAlpha = Math.max(0, Math.min(1, (zoomK - 0.42) / 0.45));
         var leafAlpha = Math.max(0, Math.min(1, (zoomK - 0.70) / 0.45));
 
@@ -486,39 +499,41 @@ var graph_inline_default = `
 
           if (hoveredNodeId !== null) {
             if (nid === hoveredNodeId) {
-              // Hovered node title: Bright & Highlighted in Purple
-              item.label.alpha = 1.0;
-              item.label.scale.set(hoverScale * 1.1);
-              item.label.style.fill = colorSecondary;
-              item.label.style.fontWeight = "bold";
-            } else if (item.active) {
-              // Directly connected node titles: HIGHLIGHTED & FULLY VISIBLE
-              item.label.alpha = 0.95;
-              item.label.scale.set(hoverScale);
-              item.label.style.fill = colorDark;
-              item.label.style.fontWeight = "600";
-            } else {
-              // Unconnected node titles: FADED OUT completely to avoid overlap/clutter
-              item.label.alpha = 0.03;
+              // Hovered node title: Highlighted in Sky Blue / Cyan with normal clean weight
+              item.targetLabelAlpha = 1.0;
               item.label.scale.set(baseScale);
+              item.label.style.fill = colorHoverHighlight;
+              item.label.style.fontWeight = "normal";
+            } else if (item.active) {
+              // Directly connected node titles: normal clean weight, clearly visible
+              item.targetLabelAlpha = 0.95;
+              item.label.scale.set(baseScale);
+              item.label.style.fill = colorDark;
+              item.label.style.fontWeight = "normal";
+            } else {
+              // Unconnected node titles: FADED OUT smoothly to avoid overlap/clutter
+              item.targetLabelAlpha = 0.02;
+              item.label.scale.set(baseScale);
+              item.label.style.fill = colorDark;
+              item.label.style.fontWeight = "normal";
             }
           } else {
             // Default view with Zoom-level fade:
             var isCurrent = (nid === currentKey);
             if (isCurrent) {
-              item.label.alpha = Math.max(0.2, zoomAlpha);
-              item.label.scale.set(hoverScale);
-              item.label.style.fill = colorSecondary;
-              item.label.style.fontWeight = "bold";
+              item.targetLabelAlpha = Math.max(0.2, zoomAlpha);
+              item.label.scale.set(baseScale);
+              item.label.style.fill = colorCurrent;
+              item.label.style.fontWeight = "normal";
             } else if (deg >= 2) {
               // Hub nodes: appear at medium zoom
-              item.label.alpha = zoomAlpha * 0.9;
+              item.targetLabelAlpha = zoomAlpha * 0.9;
               item.label.scale.set(baseScale);
               item.label.style.fill = colorDark;
               item.label.style.fontWeight = "normal";
             } else {
               // Leaf nodes: appear as you zoom in closer
-              item.label.alpha = leafAlpha * 0.75;
+              item.targetLabelAlpha = leafAlpha * 0.75;
               item.label.scale.set(baseScale);
               item.label.style.fill = colorDark;
               item.label.style.fontWeight = "normal";
@@ -539,9 +554,9 @@ var graph_inline_default = `
           text: nodeData.text,
           style: {
             fontSize: fontSz * 14.5,
-            fill: (nodeData.id === currentKey) ? colorSecondary : colorDark,
+            fill: (nodeData.id === currentKey) ? colorCurrent : colorDark,
             fontFamily: fontFam,
-            fontWeight: (nodeData.id === currentKey) ? "bold" : "normal"
+            fontWeight: "normal"
           },
           resolution: (window.devicePixelRatio || 1) * 3
         });
@@ -554,7 +569,7 @@ var graph_inline_default = `
         var gfx = new PIXI.Graphics();
         gfx.circle(0, 0, rad);
         gfx.fill({ color: isTag ? colorLight : col });
-        if (isTag) gfx.stroke({ width: 1.5, color: colorTertiary });
+        if (isTag) gfx.stroke({ width: 1.5, color: colorTags });
         gfx.eventMode = "static";
         gfx.cursor = "pointer";
 
@@ -577,6 +592,10 @@ var graph_inline_default = `
           radius: rad,
           degree: deg,
           color: col,
+          currentGfxAlpha: 1.0,
+          targetGfxAlpha: 1.0,
+          currentLabelAlpha: 0.7,
+          targetLabelAlpha: 0.7,
           active: false
         });
       }
@@ -591,7 +610,10 @@ var graph_inline_default = `
           simulationData: linkData,
           gfx: linkGfx,
           color: colorLineDefault,
+          targetColor: colorLineDefault,
           alpha: 0.6,
+          currentAlpha: 0.6,
+          targetAlpha: 0.6,
           active: false
         });
       }
@@ -701,6 +723,22 @@ var graph_inline_default = `
             mainStage.scale.set(currentZoom.k, currentZoom.k);
             mainStage.position.set(currentZoom.x, currentZoom.y);
             updateVisuals();
+          }
+
+          // Smooth animated fade transitions for nodes and links
+          var fadeLerp = 0.20;
+          for (var i = 0; i < nodeItems.length; i++) {
+            var item = nodeItems[i];
+            item.currentGfxAlpha += (item.targetGfxAlpha - item.currentGfxAlpha) * fadeLerp;
+            item.gfx.alpha = item.currentGfxAlpha;
+            item.currentLabelAlpha += (item.targetLabelAlpha - item.currentLabelAlpha) * fadeLerp;
+            item.label.alpha = item.currentLabelAlpha;
+          }
+          for (var i = 0; i < linkItems.length; i++) {
+            var link = linkItems[i];
+            link.currentAlpha += (link.targetAlpha - link.currentAlpha) * fadeLerp;
+            link.alpha = link.currentAlpha;
+            link.color = link.targetColor || colorLineDefault;
           }
           for (var i = 0; i < nodeItems.length; i++) {
             var item = nodeItems[i];
