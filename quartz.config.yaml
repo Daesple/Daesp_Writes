@@ -47,7 +47,7 @@ configuration:
         highlight: rgba(168, 130, 255, 0.15)
         textHighlight: "#b3aa0288"
 plugins:
-  - source: "@quartz-community/created-modified-date"
+  - source: "./plugins/created-modified-date"
     enabled: true
     options:
       defaultDateType: created
@@ -262,7 +262,7 @@ plugins:
     layout:
       position: footer
       priority: 50
-  - source: "@quartz-community/recent-notes"
+  - source: "./plugins/recent-notes"
     enabled: true
     options:
       title: "📚 Ghi Chú & Bài Viết Mới Nhất"
