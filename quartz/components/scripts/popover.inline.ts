@@ -104,6 +104,7 @@ async function mouseEnterHandler(
   const popoverElement = document.createElement("div")
   popoverElement.id = popoverId
   popoverElement.classList.add("popover")
+  popoverElement.setAttribute("data-lenis-prevent", "true")
 
   // Action Bar with Large Screen (Expand / Collapse) button
   const actionsEl = document.createElement("div")
@@ -154,6 +155,10 @@ async function mouseEnterHandler(
 
   const popoverInner = document.createElement("div")
   popoverInner.classList.add("popover-inner")
+  popoverInner.setAttribute("data-lenis-prevent", "true")
+  popoverInner.addEventListener("wheel", (e) => {
+    e.stopPropagation()
+  }, { passive: true })
   popoverInner.dataset.contentType = contentType ?? undefined
   popoverElement.appendChild(popoverInner)
 

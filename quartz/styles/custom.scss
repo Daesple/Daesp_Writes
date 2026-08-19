@@ -877,6 +877,8 @@ html.lenis body {
 }
 
 .lenis.lenis-smooth [data-lenis-prevent],
+.popover,
+.popover-inner,
 .global-graph-outer,
 .graph-outer {
   overscroll-behavior: contain;

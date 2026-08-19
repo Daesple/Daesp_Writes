@@ -113,6 +113,16 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
           wheelMultiplier: 0.95,
           touchMultiplier: 1.5,
           infinite: false,
+          prevent: (node) => {
+            if (!node || typeof node.closest !== 'function') return false;
+            return Boolean(
+              node.closest('.popover') ||
+              node.closest('.popover-inner') ||
+              node.closest('.global-graph-outer') ||
+              node.closest('.graph-outer') ||
+              node.closest('[data-lenis-prevent]')
+            );
+          }
         });
 
         function raf(time) {
