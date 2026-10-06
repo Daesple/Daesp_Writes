@@ -120,6 +120,14 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
               node.closest('.popover-inner') ||
               node.closest('.global-graph-outer') ||
               node.closest('.graph-outer') ||
+              node.closest('.toc') ||
+              node.closest('.toc-content') ||
+              node.closest('.search') ||
+              node.closest('.search-container') ||
+              node.closest('.search-space') ||
+              node.closest('.search-layout') ||
+              node.closest('.search-preview') ||
+              node.closest('.preview-container') ||
               node.closest('[data-lenis-prevent]')
             );
           }
@@ -140,6 +148,57 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
       document.head.appendChild(script);
     })();
   `)
+
+  // Single active section scroll-spy for Table of Contents
+  componentResources.afterDOMLoaded.push(`
+    (() => {
+      let scrollHandler = null;
+
+      function setupTocSpy() {
+        const headings = Array.from(document.querySelectorAll("article h1[id], article h2[id], article h3[id], article h4[id], article h5[id], article h6[id]"));
+        const tocLinks = Array.from(document.querySelectorAll(".toc a[data-for]"));
+        if (!headings.length || !tocLinks.length) return;
+
+        function updateSpy() {
+          const scrollPos = window.scrollY + 140;
+          let activeHeading = headings[0];
+
+          for (let i = 0; i < headings.length; i++) {
+            const h = headings[i];
+            const top = h.getBoundingClientRect().top + window.scrollY;
+            if (top <= scrollPos) {
+              activeHeading = h;
+            } else {
+              break;
+            }
+          }
+
+          tocLinks.forEach((link) => {
+            if (activeHeading && link.getAttribute("data-for") === activeHeading.id) {
+              link.classList.add("active-toc");
+            } else {
+              link.classList.remove("active-toc");
+            }
+          });
+        }
+
+        if (scrollHandler) {
+          window.removeEventListener("scroll", scrollHandler);
+        }
+        scrollHandler = updateSpy;
+        window.addEventListener("scroll", scrollHandler, { passive: true });
+        updateSpy();
+      }
+
+      document.addEventListener("nav", setupTocSpy);
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setupTocSpy);
+      } else {
+        setupTocSpy();
+      }
+    })();
+  `)
+
 
   if (cfg.analytics?.provider === "google") {
     const tagId = cfg.analytics.tagId

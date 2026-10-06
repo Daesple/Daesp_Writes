@@ -1,0 +1,23 @@
+{
+  "name": "explorer-link",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./components": "./dist/components/index.js"
+  },
+  "quartz": {
+    "name": "explorer-link",
+    "displayName": "Explorer Link",
+    "category": "component",
+    "version": "1.0.0",
+    "components": {
+      "ExplorerLink": {
+        "displayName": "Explorer Link",
+        "defaultPosition": "header",
+        "defaultPriority": 30
+      }
+    }
+  }
+}

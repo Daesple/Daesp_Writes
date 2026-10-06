@@ -19,33 +19,33 @@ configuration:
     cdnCaching: true
     typography:
       header:
-        name: Shantell Sans
-        weights: [300, 400, 600, 700]
+        name: Space Grotesk
+        weights: [400, 600, 700]
       body:
-        name: Shantell Sans
-        weights: [300, 400, 600, 700]
-      code: IBM Plex Mono
+        name: Plus Jakarta Sans
+        weights: [400, 500, 600, 700]
+      code: JetBrains Mono
     colors:
       lightMode:
-        light: "#faf8f8"
+        light: "#f8fafc"
         lightgray: "#e2e8f0"
         gray: "#94a3b8"
-        darkgray: "#475569"
-        dark: "#1e293b"
-        secondary: "#7c3aed"
-        tertiary: "#059669"
-        highlight: rgba(124, 58, 237, 0.12)
-        textHighlight: "#fff23688"
+        darkgray: "#334155"
+        dark: "#0f172a"
+        secondary: "#2563eb"
+        tertiary: "#0284c7"
+        highlight: "rgba(37, 99, 235, 0.08)"
+        textHighlight: "#fef08a88"
       darkMode:
-        light: "#16161a"
-        lightgray: "#282830"
-        gray: "#858598"
+        light: "#0b0f17"
+        lightgray: "#1e293b"
+        gray: "#64748b"
         darkgray: "#cbd5e1"
         dark: "#f8fafc"
-        secondary: "#a882ff"
-        tertiary: "#48c78e"
-        highlight: rgba(168, 130, 255, 0.15)
-        textHighlight: "#b3aa0288"
+        secondary: "#38bdf8"
+        tertiary: "#60a5fa"
+        highlight: "rgba(56, 189, 248, 0.12)"
+        textHighlight: "#eab30888"
 plugins:
   - source: "./plugins/created-modified-date"
     enabled: true
@@ -159,10 +159,12 @@ plugins:
   - source: "@quartz-community/tag-page"
     enabled: true
   - source: "@quartz-community/explorer"
+    enabled: false
+  - source: "./plugins/explorer-link"
     enabled: true
     layout:
-      position: left
-      priority: 50
+      position: header
+      priority: 30
   - source: "./plugins/graph"
     enabled: true
     layout:
@@ -197,11 +199,8 @@ plugins:
   - source: "@quartz-community/search"
     enabled: true
     layout:
-      position: left
+      position: header
       priority: 20
-      group: toolbar
-      groupOptions:
-        grow: true
   - source: "@quartz-community/backlinks"
     enabled: true
     options:
@@ -227,20 +226,15 @@ plugins:
   - source: "@quartz-community/page-title"
     enabled: true
     layout:
-      position: left
+      position: header
       priority: 10
   - source: "@quartz-community/darkmode"
     enabled: true
     layout:
-      position: left
-      priority: 30
-      group: toolbar
+      position: header
+      priority: 40
   - source: "@quartz-community/reader-mode"
-    enabled: true
-    layout:
-      position: left
-      priority: 35
-      group: toolbar
+    enabled: false
   - source: "@quartz-community/breadcrumbs"
     enabled: true
     layout:
@@ -256,12 +250,7 @@ plugins:
       position: afterBody
       priority: 10
   - source: "@quartz-community/footer"
-    enabled: true
-    options:
-      links: {}
-    layout:
-      position: footer
-      priority: 50
+    enabled: false
   - source: "./plugins/recent-notes"
     enabled: true
     options:
@@ -275,7 +264,7 @@ plugins:
       priority: 20
       condition: index
   - source: "@quartz-community/spacer"
-    enabled: true
+    enabled: false
     options: {}
     order: 25
     layout:
