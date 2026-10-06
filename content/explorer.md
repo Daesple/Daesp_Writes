@@ -5,147 +5,163 @@ title: Explorer
 <div class="gm-explorer">
   <header class="gm-header">
     <h1 class="gm-title">Explorer</h1>
-    <p class="gm-subtitle">Danh mục toàn bộ bài viết, tiểu luận và ghi chép theo cấu trúc 3 cột tối giản.</p>
+    <p class="gm-subtitle">Danh mục tự động cập nhật toàn bộ bài viết, tài nguyên và chủ đề từ vault.</p>
   </header>
 
-  <!-- 1. PROJECTS -->
-  <section class="gm-section">
-    <div class="gm-col-group">
-      <h2 class="gm-group-name">Projects</h2>
+  <div id="explorer-dynamic-container">
+    <div class="explorer-loading" style="padding: 2rem 0; color: var(--gray); font-style: italic;">
+      Đang tải danh mục bài viết từ vault...
     </div>
-    <div class="gm-col-content">
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/rm---the-unexpected-stage">The Unexpected Stage / Sân Khấu Bất Ngờ</a>
-        </div>
-        <div class="gm-item-meta">RMMV Documentary · Aug 19, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/how-i-made-my-first-rm-mvp-game">How I Made My First RM MVP Game</a>
-        </div>
-        <div class="gm-item-meta">RMMV Documentary · Aug 16, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./so,-what-should-i-make">Game Concept: “Papilio”</a>
-        </div>
-        <div class="gm-item-meta">Papilio · Aug 16, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/learning-recap">RMMV Learning Recap (MOC)</a>
-        </div>
-        <div class="gm-item-meta">Overview Hub · Aug 16, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/1.-design_reflection/an-opinionated-engine">An Opinionated Engine: Triết lý của RPG Maker</a>
-        </div>
-        <div class="gm-item-meta">Design Reflection · Aug 14, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/1.-design_reflection/map-editor-evaluation">Map Editor: Đánh giá công cụ thiết kế bản đồ</a>
-        </div>
-        <div class="gm-item-meta">Design Reflection · Aug 14, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/2.-technical_notes/event-driven-design-in-rmmv">Event-Driven Design trong RPG Maker MV</a>
-        </div>
-        <div class="gm-item-meta">Technical Notes · Aug 13, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/3.-implementation_log/dialogue--and--variables">Hệ thống biến số và hội thoại (Dialogue &amp; Variables)</a>
-        </div>
-        <div class="gm-item-meta">Implementation Log · Aug 11, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/3.-implementation_log/opening-cutscene">Cảnh cắt mở đầu (Opening Cutscene)</a>
-        </div>
-        <div class="gm-item-meta">Implementation Log · Aug 10, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/3.-implementation_log/fetch-quest-logic">Fetch Quest Logic trong RMMV</a>
-        </div>
-        <div class="gm-item-meta">Implementation Log · Aug 09, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/3.-implementation_log/flashlight--and--push-system">Flashlight &amp; Push System</a>
-        </div>
-        <div class="gm-item-meta">Implementation Log · Aug 08, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./projects/rmmv_documentary/3.-implementation_log/final-chase--and--plugins">Final Chase &amp; Plugins Integration</a>
-        </div>
-        <div class="gm-item-meta">Implementation Log · Aug 08, 2026</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. RESOURCES -->
-  <section class="gm-section">
-    <div class="gm-col-group">
-      <h2 class="gm-group-name">Resources</h2>
-    </div>
-    <div class="gm-col-content">
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./resources/video-game-khác-game-ngoài-đời-như-thế-nào">Video game khác game truyền thống như thế nào?</a>
-        </div>
-        <div class="gm-item-meta">Mini Essay · Aug 18, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./resources/understanding-is-the-new-bottleneck">Understanding is the New Bottleneck</a>
-        </div>
-        <div class="gm-item-meta">Reading Note · Aug 17, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./resources/bayesian-thinking">Bayesian Thinking trong Game Design</a>
-        </div>
-        <div class="gm-item-meta">Framework · Aug 15, 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./resources/play-the-long-game">Play The Long Game</a>
-        </div>
-        <div class="gm-item-meta">Essay · Aug 15, 2026</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. TOPICS -->
-  <section class="gm-section">
-    <div class="gm-col-group">
-      <h2 class="gm-group-name">Topics</h2>
-    </div>
-    <div class="gm-col-content">
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./topics/game-design">Game Design (Hub)</a>
-        </div>
-        <div class="gm-item-meta">Topic Hub · Aug 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./topics/rmmv">RPG Maker MV (Hub)</a>
-        </div>
-        <div class="gm-item-meta">Topic Hub · Aug 2026</div>
-      </div>
-      <div class="gm-row">
-        <div class="gm-item-title">
-          <a href="./topics/storytelling">Storytelling &amp; Narrative (Hub)</a>
-        </div>
-        <div class="gm-item-meta">Topic Hub · Aug 2026</div>
-      </div>
-    </div>
-  </section>
+  </div>
 </div>
+
+<script>
+(() => {
+  async function renderDynamicExplorer() {
+    const container = document.getElementById("explorer-dynamic-container");
+    if (!container) return;
+
+    try {
+      const basePath = (document.body.dataset.basepath || "").replace(/\/$/, "");
+      let index = null;
+      if (window.fetchData) {
+        try { index = await window.fetchData; } catch (e) {}
+      }
+      if (!index) {
+        const res = await fetch(`${basePath}/static/contentIndex.json`);
+        if (!res.ok) throw new Error("Could not load contentIndex.json");
+        index = await res.json();
+      }
+
+      const projects = [];
+      const resources = [];
+      const topicNotes = [];
+      const tagCount = {};
+
+      Object.entries(index).forEach(([slug, item]) => {
+        // Exclude system/index files
+        if (
+          slug === "index" ||
+          slug === "explorer" ||
+          slug === "404" ||
+          slug.endsWith("/index") ||
+          slug.startsWith("tags/")
+        ) {
+          return;
+        }
+
+        const fp = (item.filePath || slug).toLowerCase();
+        const title = item.title || slug.split("/").pop();
+        const date = item.date || "";
+
+        // Track tags
+        (item.tags || []).forEach(t => {
+          tagCount[t] = (tagCount[t] || 0) + 1;
+        });
+
+        if (fp.startsWith("projects/")) {
+          const parts = (item.filePath || "").split("/");
+          let hint = "Project";
+          if (parts.length > 2) {
+            hint = parts[parts.length - 2].replace(/^\d+[\.\-_]\s*/, "");
+          }
+          projects.push({ slug, title, date, hint });
+        } else if (fp.startsWith("resources/")) {
+          resources.push({ slug, title, date, hint: "Resource" });
+        } else if (fp.startsWith("topics/")) {
+          topicNotes.push({ slug, title, hint: "Topic Hub" });
+        }
+      });
+
+      // Sort projects & resources by date (newest first)
+      const sortByDate = (a, b) => {
+        const da = a.date ? new Date(a.date).getTime() : 0;
+        const db = b.date ? new Date(b.date).getTime() : 0;
+        if (db !== da) return db - da;
+        return a.title.localeCompare(b.title);
+      };
+
+      projects.sort(sortByDate);
+      resources.sort(sortByDate);
+
+      // Topics: combine topic hub notes and vault tags
+      const topics = [];
+      topicNotes.forEach(tn => {
+        topics.push({
+          title: tn.title,
+          href: `${basePath}/${tn.slug}`,
+          meta: tn.hint
+        });
+      });
+
+      // Also add unique vault tags
+      Object.entries(tagCount).forEach(([tag, count]) => {
+        const exists = topics.some(t => t.title.toLowerCase() === tag.toLowerCase());
+        if (!exists) {
+          topics.push({
+            title: `#${tag}`,
+            href: `${basePath}/tags/${tag}`,
+            meta: `${count} ${count > 1 ? "notes" : "note"}`
+          });
+        }
+      });
+
+      topics.sort((a, b) => a.title.localeCompare(b.title));
+
+      function formatDate(dStr) {
+        if (!dStr) return "";
+        try {
+          const d = new Date(dStr);
+          if (isNaN(d.getTime())) return "";
+          return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+        } catch {
+          return "";
+        }
+      }
+
+      function buildSection(groupName, items, isTopic = false) {
+        if (!items.length) return "";
+        const rowsHtml = items.map(it => {
+          const href = isTopic ? it.href : `${basePath}/${it.slug}`;
+          const metaText = isTopic ? it.meta : (formatDate(it.date) || it.hint);
+          return `
+            <div class="gm-row">
+              <div class="gm-item-title">
+                <a href="${href}">${it.title}</a>
+              </div>
+              <div class="gm-item-meta">${metaText}</div>
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <section class="gm-section">
+            <div class="gm-col-group">
+              <h2 class="gm-group-name">${groupName}</h2>
+            </div>
+            <div class="gm-col-content">
+              ${rowsHtml}
+            </div>
+          </section>
+        `;
+      }
+
+      container.innerHTML = 
+        buildSection("Projects", projects) +
+        buildSection("Resources", resources) +
+        buildSection("Topics", topics, true);
+
+    } catch (err) {
+      console.error("Error generating explorer:", err);
+      container.innerHTML = `<div style="color: var(--gray); padding: 2rem 0;">Không thể tải dữ liệu tự động.</div>`;
+    }
+  }
+
+  document.addEventListener("nav", renderDynamicExplorer);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", renderDynamicExplorer);
+  } else {
+    renderDynamicExplorer();
+  }
+})();
+</script>
