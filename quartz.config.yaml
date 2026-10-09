@@ -229,6 +229,8 @@ plugins:
       position: header
       priority: 10
   - source: "@quartz-community/darkmode"
+    enabled: false
+  - source: "./plugins/theme-selector"
     enabled: true
     layout:
       position: header

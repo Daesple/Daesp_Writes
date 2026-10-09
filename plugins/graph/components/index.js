@@ -342,30 +342,32 @@ var graph_inline_default = `
         }
       }
 
-      // Detect dark vs light theme
-      var isDark = document.documentElement.getAttribute("saved-theme") === "dark" ||
-                   (!document.documentElement.getAttribute("saved-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      // Detect dark vs light vs blue/blueprint theme
+      var savedTheme = document.documentElement.getAttribute("saved-theme") || "blue";
+      var isBlueprint = savedTheme === "blue" || savedTheme === "blueprint";
+      var isDark = savedTheme === "dark" || isBlueprint ||
+                   (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
 
       var computedStyle = getComputedStyle(document.documentElement);
-      var colorSecondary = resolveColor(computedStyle.getPropertyValue("--secondary").trim(), isDark ? "#a882ff" : "#7c3aed");
-      var colorTertiary = resolveColor(computedStyle.getPropertyValue("--tertiary").trim(), isDark ? "#48c78e" : "#059669");
-      var colorGray = resolveColor(computedStyle.getPropertyValue("--gray").trim(), isDark ? "#9e9eb0" : "#64748b");
-      // 20-30% brighter in dark mode, 20-30% darker in light mode
-      var colorLineDefault = isDark ? "#525268" : "#94a3b8";
-      var colorDark = resolveColor(computedStyle.getPropertyValue("--dark").trim(), isDark ? "#f8fafc" : "#0f172a");
-      var colorLight = resolveColor(computedStyle.getPropertyValue("--light").trim(), isDark ? "#16161a" : "#faf8f8");
+      var colorSecondary = resolveColor(computedStyle.getPropertyValue("--secondary").trim(), isBlueprint ? "#38bdf8" : (isDark ? "#a882ff" : "#7c3aed"));
+      var colorTertiary = resolveColor(computedStyle.getPropertyValue("--tertiary").trim(), isBlueprint ? "#7dd3fc" : (isDark ? "#48c78e" : "#059669"));
+      var colorGray = resolveColor(computedStyle.getPropertyValue("--gray").trim(), isBlueprint ? "#648ba8" : (isDark ? "#9e9eb0" : "#64748b"));
+      // 20-30% brighter in dark mode, technical grid lines in blueprint
+      var colorLineDefault = isBlueprint ? "#1e4976" : (isDark ? "#525268" : "#94a3b8");
+      var colorDark = resolveColor(computedStyle.getPropertyValue("--dark").trim(), isBlueprint ? "#ffffff" : (isDark ? "#f8fafc" : "#0f172a"));
+      var colorLight = resolveColor(computedStyle.getPropertyValue("--light").trim(), isBlueprint ? "#0d223a" : (isDark ? "#16161a" : "#faf8f8"));
       var fontFam = computedStyle.getPropertyValue("--bodyFont").trim() || "inherit";
 
-      // Color coding palette
-      var colorCurrent = colorSecondary; // Current active page (Purple)
-      var colorProjects = resolveColor(isDark ? "#60a5fa" : "#2563eb"); // Blue for Projects / Game Dev
-      var colorResources = resolveColor(isDark ? "#34d399" : "#059669"); // Emerald for Resources / Articles
-      var colorTopics = resolveColor(isDark ? "#fbbf24" : "#d97706"); // Amber for Topics / Hubs / MOCs
-      var colorTags = resolveColor(isDark ? "#f472b6" : "#e11d48"); // Rose/Pink for Tags
-      var colorDefault = resolveColor(isDark ? "#94a3b8" : "#64748b"); // Slate Gray for General
+      // Color coding palette (Blueprint uses cohesive drafting blues & cyans with clear hierarchy)
+      var colorCurrent = colorSecondary; // Current active page
+      var colorProjects = resolveColor(isBlueprint ? "#93c5fd" : (isDark ? "#60a5fa" : "#2563eb")); // Technical drafting blue
+      var colorResources = resolveColor(isBlueprint ? "#67e8f9" : (isDark ? "#34d399" : "#059669")); // Cyan drafting ink
+      var colorTopics = resolveColor(isBlueprint ? "#38bdf8" : (isDark ? "#fbbf24" : "#d97706")); // Electric blueprint cyan for hubs
+      var colorTags = resolveColor(isBlueprint ? "#7dd3fc" : (isDark ? "#f472b6" : "#e11d48")); // Sky blueprint ink
+      var colorDefault = resolveColor(isBlueprint ? "#94a3b8" : (isDark ? "#94a3b8" : "#64748b")); // Technical chalk gray
 
-      // High-contrast Hover Text Highlight Color (Sky Blue / Cyan to contrast against purple lines)
-      var colorHoverHighlight = resolveColor(isDark ? "#38bdf8" : "#0284c7");
+      // High-contrast Hover Text Highlight Color
+      var colorHoverHighlight = resolveColor(isBlueprint ? "#ffffff" : (isDark ? "#38bdf8" : "#0284c7"));
 
       var app = new PIXI.Application();
       await app.init({
@@ -926,6 +928,11 @@ var graph_inline_default = `
     document.addEventListener("prenav", clearCleanups);
     document.addEventListener("nav", onNavigate);
     document.addEventListener("render", onNavigate);
+    document.addEventListener("themechange", function() {
+      refreshLocal();
+      var outers = document.querySelectorAll(".global-graph-outer.active");
+      if (outers.length > 0) openGlobal();
+    });
   }
 })();
 `;
