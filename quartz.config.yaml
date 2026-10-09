@@ -254,7 +254,7 @@ plugins:
   - source: "./plugins/recent-notes"
     enabled: true
     options:
-      title: "📚 Ghi Chú & Bài Viết Mới Nhất"
+      title: "Ghi Chú & Bài Viết Mới Nhất"
       limit: 8
       showTags: true
       hideTagPages: true

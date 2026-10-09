@@ -19,7 +19,7 @@ tags:
 
 ---
 
-## 📑 Table of contents
+## Table of contents
 
 | Vie | Eng |
 | :--- | :--- |
