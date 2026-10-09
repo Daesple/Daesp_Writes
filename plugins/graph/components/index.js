@@ -472,8 +472,9 @@ var graph_inline_default = `
             item.targetColor = item.active ? colorSecondary : colorLineDefault;
           } else {
             // Visible, crisp default lines (20-30% brighter/darker than background)
-            item.targetAlpha = 0.6;
-            item.targetColor = colorLineDefault;
+            var isCurrentLink = (item.simulationData.source.id === currentKey || item.simulationData.target.id === currentKey);
+            item.targetAlpha = isCurrentLink ? 0.85 : 0.55;
+            item.targetColor = isCurrentLink ? colorCurrent : colorLineDefault;
           }
         }
 
@@ -522,10 +523,10 @@ var graph_inline_default = `
             // Default view with Zoom-level fade:
             var isCurrent = (nid === currentKey);
             if (isCurrent) {
-              item.targetLabelAlpha = Math.max(0.2, zoomAlpha);
-              item.label.scale.set(baseScale);
+              item.targetLabelAlpha = Math.max(0.65, zoomAlpha);
+              item.label.scale.set(baseScale * 1.08);
               item.label.style.fill = colorCurrent;
-              item.label.style.fontWeight = "normal";
+              item.label.style.fontWeight = "bold";
             } else if (deg >= 2) {
               // Hub nodes: appear at medium zoom
               item.targetLabelAlpha = zoomAlpha * 0.9;
@@ -547,30 +548,48 @@ var graph_inline_default = `
       for (var k = 0; k < simulationNodes.length; k++) {
         var nodeData = simulationNodes[k];
         var isTag = nodeData.id.startsWith("tags/");
+        var isCurrent = (nodeData.id === currentKey);
         var rad = getNodeRadius(nodeData);
+        if (isCurrent) rad = rad * 1.35 + 1.5;
         var deg = getNodeDegree(nodeData);
         var col = getNodeColor(nodeData);
 
         var txt = new PIXI.Text({
           text: nodeData.text,
           style: {
-            fontSize: fontSz * 14.5,
-            fill: (nodeData.id === currentKey) ? colorCurrent : colorDark,
+            fontSize: isCurrent ? (fontSz * 15.5) : (fontSz * 14.5),
+            fill: isCurrent ? colorCurrent : colorDark,
             fontFamily: fontFam,
-            fontWeight: "normal"
+            fontWeight: isCurrent ? "bold" : "normal"
           },
           resolution: (window.devicePixelRatio || 1) * 3
         });
         // Set anchor to top-center (0.5, 0) so the text sits strictly BELOW the circle
         txt.anchor.set(0.5, 0);
-        txt.alpha = (nodeData.id === currentKey) ? 1.0 : (deg >= 2 ? 0.9 : 0.7);
+        txt.alpha = isCurrent ? 1.0 : (deg >= 2 ? 0.9 : 0.7);
         txt.scale.set(1 / scaleFactor);
         labelContainer.addChild(txt);
+
+        var haloGfx = null;
+        if (isCurrent) {
+          haloGfx = new PIXI.Graphics();
+          // Soft aura glow
+          haloGfx.circle(0, 0, rad + 4.5);
+          haloGfx.fill({ color: colorCurrent, alpha: 0.12 });
+          // Outer target halo ring
+          haloGfx.circle(0, 0, rad + 4.5);
+          haloGfx.stroke({ width: 1.5, color: colorCurrent, alpha: 0.75 });
+          nodeContainer.addChild(haloGfx);
+        }
 
         var gfx = new PIXI.Graphics();
         gfx.circle(0, 0, rad);
         gfx.fill({ color: isTag ? colorLight : col });
-        if (isTag) gfx.stroke({ width: 1.5, color: colorTags });
+        if (isTag) {
+          gfx.stroke({ width: 1.5, color: colorTags });
+        } else if (isCurrent) {
+          gfx.stroke({ width: 1.5, color: colorCurrent, alpha: 0.95 });
+        }
         gfx.eventMode = "static";
         gfx.cursor = "pointer";
 
@@ -589,6 +608,7 @@ var graph_inline_default = `
         nodeItems.push({
           simulationData: nodeData,
           gfx: gfx,
+          haloGfx: haloGfx,
           label: txt,
           radius: rad,
           degree: deg,
@@ -741,14 +761,25 @@ var graph_inline_default = `
             link.alpha = link.currentAlpha;
             link.color = link.targetColor || colorLineDefault;
           }
+          var now = performance.now();
+          var pulse = (Math.sin(now * 0.0024) + 1) * 0.5; // Smooth 0..1 wave (~2.6s cycle)
+
           for (var i = 0; i < nodeItems.length; i++) {
             var item = nodeItems[i];
             var nx = item.simulationData.x;
             var ny = item.simulationData.y;
             if (nx != null && ny != null) {
-              item.gfx.position.set(nx + width / 2, ny + height / 2);
+              var posX = nx + width / 2;
+              var posY = ny + height / 2;
+              item.gfx.position.set(posX, posY);
+              if (item.haloGfx) {
+                item.haloGfx.position.set(posX, posY);
+                var haloScale = 1.0 + pulse * 0.22;
+                item.haloGfx.scale.set(haloScale, haloScale);
+                item.haloGfx.alpha = item.currentGfxAlpha * (0.40 + pulse * 0.50);
+              }
               // Place label strictly BELOW node circle with 4px gap (Obsidian alignment)
-              item.label.position.set(nx + width / 2, ny + height / 2 + item.radius + 4);
+              item.label.position.set(posX, posY + item.radius + 4);
             }
           }
           for (var i = 0; i < linkItems.length; i++) {
@@ -760,8 +791,8 @@ var graph_inline_default = `
               link.gfx.clear();
               link.gfx.moveTo(sx + width / 2, sy + height / 2);
               link.gfx.lineTo(tx + width / 2, ty + height / 2);
-              // Ultra-thin crisp lines: 0.5px default, 0.9px when active!
-              var strokeWidth = link.active ? 0.9 : 0.5;
+              var isCurrentLink = (simD.source.id === currentKey || simD.target.id === currentKey);
+              var strokeWidth = link.active ? 1.0 : (isCurrentLink ? 0.75 : 0.5);
               link.gfx.stroke({ alpha: link.alpha, width: strokeWidth, color: link.color });
             }
           }
