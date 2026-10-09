@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - v5 # Kích hoạt tự động khi bạn đẩy dữ liệu lên nhánh v5
+      - ui-refresh # Kích hoạt tự động khi bạn đẩy dữ liệu lên nhánh ui-refresh
   workflow_dispatch:
 
 permissions:
