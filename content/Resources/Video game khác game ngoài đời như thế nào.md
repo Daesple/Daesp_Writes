@@ -5,10 +5,9 @@ status: done
 date: 2026-08-18
 tags:
   - resource
-  - mini-essay
 ---
 
-**Chủ đề liên quan:** [[Game Design]] · [[Storytelling]]
+**Chủ đề liên quan:** [[Mini-essay]] [[Game Design]] · [[Storytelling]]
 
 # Let's take a look at the logic chain
 

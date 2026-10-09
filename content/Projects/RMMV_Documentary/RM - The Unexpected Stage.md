@@ -5,13 +5,12 @@ status: WIP
 date: 2026-08-19T10:30:00
 tags:
   - project
-  - mini-essay
 ---
 
 # The Unexpected Stage / Sân Khấu Bất Ngờ
 ### *An Essay on RPG Maker in 5 Acts*
 
-**Chủ đề liên quan:** [[RMMV]] · [[Game Design]]
+**Chủ đề liên quan:** [[Mini-essay]], [[RMMV]], [[Game Design]]
 
 > [!WARNING] ⏳ Draft & Disclaimer
 > This is an unofficial version of the essay, only outline and some WIPs!!  

@@ -8,6 +8,8 @@ import spaRouterScript from "../../components/scripts/spa.inline"
 import popoverScript from "../../components/scripts/popover.inline"
 // @ts-ignore
 import graphFilterScript from "../../components/scripts/graph-filter.inline"
+// @ts-ignore
+import explorerLayoutScript from "../../components/scripts/explorer-layout.inline"
 import baseStyles from "../../styles/base.scss"
 import customStyles from "../../styles/custom.scss"
 import popoverStyle from "../../components/styles/popover.scss"
@@ -94,6 +96,9 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
 
   // graph filters
   componentResources.afterDOMLoaded.push(graphFilterScript)
+
+  // explorer 3-column editorial layout
+  componentResources.afterDOMLoaded.push(explorerLayoutScript)
 
   // Lenis Kinetic Smooth Scroll for reading notes
   componentResources.afterDOMLoaded.push(`
@@ -629,6 +634,32 @@ export const ComponentResources: QuartzEmitterPlugin = () => {
         ext: ".js",
         content: postscript,
       })
+
+      // Always emit unhashed fallbacks so HTML referencing postscript.js/prescript.js/index.css never 404
+      if (postscriptSlug !== "postscript") {
+        yield write({
+          ctx,
+          slug: "postscript" as FullSlug,
+          ext: ".js",
+          content: postscript,
+        })
+      }
+      if (prescriptSlug !== "prescript") {
+        yield write({
+          ctx,
+          slug: "prescript" as FullSlug,
+          ext: ".js",
+          content: prescript,
+        })
+      }
+      if (cssSlug !== "index") {
+        yield write({
+          ctx,
+          slug: "index" as FullSlug,
+          ext: ".css",
+          content: cssContent,
+        })
+      }
     },
     async *partialEmit() {},
   }

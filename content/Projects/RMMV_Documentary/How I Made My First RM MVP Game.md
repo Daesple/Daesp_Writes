@@ -1,13 +1,12 @@
 ---
 title: How I Made My First RM MVP Game
-description: "Báo cáo tổng kết toàn diện quá trình tạo mẫu game MVP trên nền tảng RPG Maker MV."
+description: Báo cáo tổng kết toàn diện quá trình tạo mẫu game MVP trên nền tảng RPG Maker MV.
 status: wip
 tags:
   - project
-  - mini-essay
 ---
 
-**Chủ đề liên quan:** [[RMMV]] · [[Game Design]]
+**Chủ đề liên quan:** [[Mini-essay]], [[RMMV]], [[Game Design]]
 
 > [!NOTE] 📋 Ghi chú đang ở giai đoạn lên kế hoạch
 > *Bài viết này đang ở giai đoạn chuẩn bị và tổng hợp tư liệu. Nội dung sẽ được cập nhật sau.*
