@@ -13,9 +13,9 @@ Explore the site!
 
 ## Resources
 
+- [[Bayesian thinking]] | Oct 15, 2026
 - [[Video game khác game ngoài đời như thế nào]] | Aug 18, 2026
 - [[Understanding is the new bottleneck]] | Aug 17, 2026
-- [[Bayesian thinking]] | Aug 15, 2026
 - [[Play the Long game]] | Aug 15, 2026
 
 ## Topics
