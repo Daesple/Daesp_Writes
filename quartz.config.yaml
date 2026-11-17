@@ -79,6 +79,7 @@ plugins:
     layout:
       position: right
       priority: 30
+      condition: not-index
   - source: "@quartz-community/crawl-links"
     enabled: true
     options:
@@ -161,7 +162,7 @@ plugins:
   - source: "@quartz-community/explorer"
     enabled: false
   - source: "./plugins/explorer-link"
-    enabled: true
+    enabled: false
     layout:
       position: header
       priority: 30
@@ -170,6 +171,7 @@ plugins:
     layout:
       position: right
       priority: 10
+      condition: not-index
     options:
       localGraph:
         drag: true
@@ -190,6 +192,42 @@ plugins:
         scale: 0.95
         repelForce: 2.6
         centerForce: 0.15
+        linkDistance: 60
+        fontSize: 0.55
+        opacityScale: 1.0
+        showTags: true
+        focusOnHover: true
+        enableRadial: true
+  - source: "./plugins/graph"
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 1
+      condition: index
+    options:
+      localGraph:
+        drag: true
+        zoom: true
+        depth: -1
+        scale: 0.95
+        repelForce: 2.8
+        centerForce: 0.14
+        linkDistance: 60
+        fontSize: 0.55
+        opacityScale: 1.0
+        showTags: true
+        focusOnHover: true
+        enableRadial: true
+        curvedLinks: true
+        rotate: true
+        flowParticles: true
+      globalGraph:
+        drag: true
+        zoom: true
+        depth: -1
+        scale: 0.95
+        repelForce: 2.8
+        centerForce: 0.14
         linkDistance: 60
         fontSize: 0.55
         opacityScale: 1.0
@@ -234,7 +272,7 @@ plugins:
     enabled: true
     layout:
       position: header
-      priority: 40
+      priority: 50
   - source: "@quartz-community/reader-mode"
     enabled: false
   - source: "@quartz-community/breadcrumbs"
@@ -273,6 +311,11 @@ plugins:
       position: left
       priority: 25
       display: mobile-only
+  - source: "./plugins/article-list"
+    enabled: true
+    layout:
+      position: left
+      priority: 10
   - source: "@quartz-community/bases-page"
     enabled: true
     options: {}

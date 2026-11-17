@@ -91,7 +91,12 @@ var graph_default = `
 var graph_inline_default = `
 (function() {
   function Nu() {
-    return typeof document === "undefined" ? "" : document.body?.dataset?.basepath ?? "";
+    if (typeof document === "undefined") return "";
+    // On localhost / local dev server, ignore basepath (Quartz build sets it
+    // to the GitHub Pages subpath, but the dev file server serves from root)
+    var host = typeof location !== "undefined" ? location.hostname : "";
+    if (host === "localhost" || host === "127.0.0.1") return "";
+    return document.body?.dataset?.basepath ?? "";
   }
   function $u(u, e) {
     let t = e ?? Nu();
@@ -194,6 +199,18 @@ var graph_inline_default = `
       var showTags = cfg.showTags ?? true;
       var focusOnHover = cfg.focusOnHover ?? true;
       var enableRadial = cfg.enableRadial ?? false;
+      var enableRotate = Boolean(cfg.rotate);
+      var enableCurvedLinks = Boolean(cfg.curvedLinks);
+      var enableFlowParticles = Boolean(cfg.flowParticles);
+
+      var prefersReducedMotion = false;
+      try {
+        prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      } catch (e) {}
+      if (prefersReducedMotion) {
+        enableRotate = false;
+        enableFlowParticles = false;
+      }
 
       // Obsidian-style Graph Filters from localStorage
       var graphFilters = { tags: true, attachments: false, existingFiles: true, orphans: true };
@@ -202,7 +219,11 @@ var graph_inline_default = `
         graphFilters = Object.assign(graphFilters, savedFilters);
       } catch (e) {}
 
-      if (graphFilters.tags !== undefined) showTags = graphFilters.tags;
+      if (cfg.showTags === false) {
+        showTags = false;
+      } else if (graphFilters.tags !== undefined) {
+        showTags = graphFilters.tags;
+      }
 
       var isAttachment = function(p) {
         return /\.(png|jpe?g|webp|gif|svg|mp4|pdf|mp3|zip)$/i.test(p) || p.startsWith("assets/") || p.startsWith("static/");
@@ -369,6 +390,42 @@ var graph_inline_default = `
       // High-contrast Hover Text Highlight Color
       var colorHoverHighlight = resolveColor(isBlueprint ? "#ffffff" : (isDark ? "#38bdf8" : "#0284c7"));
 
+      // Blueprint color system type colors
+      var colorTypeProject = resolveColor(computedStyle.getPropertyValue("--type-project").trim(), "#38bdf8");
+      var colorTypeResource = resolveColor(computedStyle.getPropertyValue("--type-resource").trim(), "#fbbf24");
+      var colorTypeConcept = resolveColor(computedStyle.getPropertyValue("--type-concept").trim(), "#a78bfa");
+      var colorTypeOther = resolveColor(computedStyle.getPropertyValue("--type-other").trim(), "#5f7898");
+      var colorBpLine = resolveColor(computedStyle.getPropertyValue("--bp-line").trim(), "rgba(56,189,248,0.18)");
+      var colorBpText = resolveColor(computedStyle.getPropertyValue("--bp-text").trim(), "#e6f1ff");
+
+      function getNodeTypeColor(node) {
+        var tags = node.tags;
+        if ((!tags || tags.length === 0) && contentData) {
+          var d = contentData.get(node.id);
+          tags = d?.tags;
+        }
+        var firstTag = (Array.isArray(tags) && tags.length > 0) ? tags[0] : "";
+        if (firstTag === "project") return colorTypeProject;
+        if (firstTag === "resource") return colorTypeResource;
+        if (firstTag === "concept") return colorTypeConcept;
+        if (firstTag) return colorTypeOther;
+        return colorTypeOther || colorBpLine;
+      }
+
+      function getLinkControlPoint(x1, y1, x2, y2, srcId, tgtId) {
+        var mx = (x1 + x2) / 2;
+        var my = (y1 + y2) / 2;
+        var dx = x2 - x1;
+        var dy = y2 - y1;
+        var len = Math.sqrt(dx * dx + dy * dy);
+        if (len < 0.001) return { cx: mx, cy: my };
+        var dir = (srcId < tgtId) ? 1 : -1;
+        var offset = len * 0.15 * dir;
+        var nx = (-dy / len) * offset;
+        var ny = (dx / len) * offset;
+        return { cx: mx + nx, cy: my + ny };
+      }
+
       var app = new PIXI.Application();
       await app.init({
         width: width,
@@ -383,6 +440,11 @@ var graph_inline_default = `
 
       var mainStage = new PIXI.Container();
       app.stage.addChild(mainStage);
+
+      var graphWrapper = new PIXI.Container();
+      graphWrapper.position.set(width / 2, height / 2);
+      graphWrapper.pivot.set(width / 2, height / 2);
+      mainStage.addChild(graphWrapper);
 
       function getNodeDegree(node) {
         var deg = 0;
@@ -407,7 +469,7 @@ var graph_inline_default = `
         .force("link", d3.forceLink(simulationLinks).distance(linkDist))
         .force("collide", d3.forceCollide().radius(function(d) {
           var r = getNodeRadius(d);
-          return r + 26; // Generous circular collision boundary
+          return r + 26;
         }).iterations(4));
 
       if (enableRadial) {
@@ -416,11 +478,14 @@ var graph_inline_default = `
       }
 
       var linkContainer = new PIXI.Container();
+      var particleGfx = new PIXI.Graphics();
+      particleGfx.eventMode = "none";
       var nodeContainer = new PIXI.Container();
       var labelContainer = new PIXI.Container();
-      mainStage.addChild(linkContainer);
-      mainStage.addChild(nodeContainer);
-      mainStage.addChild(labelContainer);
+      graphWrapper.addChild(linkContainer);
+      graphWrapper.addChild(particleGfx);
+      graphWrapper.addChild(nodeContainer);
+      graphWrapper.addChild(labelContainer);
 
       var nodeItems = [];
       var linkItems = [];
@@ -428,8 +493,42 @@ var graph_inline_default = `
       var activeNodeIds = new Set();
       var dragStartTime = 0;
       var isDragging = false;
-      var currentZoom = d3.zoomIdentity;
-      var targetZoom = d3.zoomIdentity;
+
+      var activeFilterTags = null;
+      try {
+        if (window.__quartzActiveFilterTags instanceof Set) {
+          activeFilterTags = window.__quartzActiveFilterTags;
+        }
+      } catch (e) {}
+
+      function isNodeFilterVisible(node) {
+        if (!activeFilterTags || !node) return true;
+        var nid = node.id || "";
+        if (nid.startsWith("tags/")) {
+          var tagClean = nid.substring(5).toLowerCase();
+          return activeFilterTags.has(tagClean);
+        }
+        var tags = node.tags;
+        if ((!tags || tags.length === 0) && contentData) {
+          tags = contentData.get(nid)?.tags;
+        }
+        if (!tags || tags.length === 0) {
+          return activeFilterTags.has("other");
+        }
+        for (var t = 0; t < tags.length; t++) {
+          if (activeFilterTags.has(String(tags[t]).toLowerCase().trim())) return true;
+        }
+        return false;
+      }
+
+      var initScale = scaleFactor || 1.0;
+      var initialZoom = d3.zoomIdentity
+        .translate((width / 2) * (1 - initScale), (height / 2) * (1 - initScale))
+        .scale(initScale);
+      var currentZoom = initialZoom;
+      var targetZoom = initialZoom;
+      mainStage.scale.set(currentZoom.k, currentZoom.k);
+      mainStage.position.set(currentZoom.x, currentZoom.y);
 
       function getNodeColor(node) {
         var slug = node.id.toLowerCase();
@@ -469,21 +568,38 @@ var graph_inline_default = `
         // Link alpha & color
         for (var i = 0; i < linkItems.length; i++) {
           var item = linkItems[i];
-          if (hoveredNodeId !== null) {
-            item.targetAlpha = item.active ? 0.95 : 0.04;
-            item.targetColor = item.active ? colorSecondary : colorLineDefault;
+          var srcNode = item.simulationData.source;
+          var tgtNode = item.simulationData.target;
+          var srcVis = isNodeFilterVisible(srcNode);
+          var tgtVis = isNodeFilterVisible(tgtNode);
+
+          if (!srcVis || !tgtVis) {
+            item.targetAlpha = 0;
+            item.isFilteredOut = true;
           } else {
-            // Visible, crisp default lines (20-30% brighter/darker than background)
-            var isCurrentLink = (item.simulationData.source.id === currentKey || item.simulationData.target.id === currentKey);
-            item.targetAlpha = isCurrentLink ? 0.85 : 0.55;
-            item.targetColor = isCurrentLink ? colorCurrent : colorLineDefault;
+            item.isFilteredOut = false;
+            if (hoveredNodeId !== null) {
+              item.targetAlpha = item.active ? 0.85 : 0.04;
+              item.targetColor = item.active ? colorSecondary : (item.baseColor || colorLineDefault);
+            } else {
+              // Visible, crisp default lines (20-30% brighter/darker than background)
+              var isCurrentLink = (item.simulationData.source.id === currentKey || item.simulationData.target.id === currentKey);
+              item.targetAlpha = isCurrentLink ? (enableCurvedLinks ? 0.65 : 0.85) : (enableCurvedLinks ? 0.25 : 0.55);
+              item.targetColor = isCurrentLink ? colorCurrent : (item.baseColor || colorLineDefault);
+            }
           }
         }
+        linksNeedRedraw = true;
 
         // Node circle alpha
         for (var i = 0; i < nodeItems.length; i++) {
           var item = nodeItems[i];
-          if (hoveredNodeId !== null && focusOnHover) {
+          var isVis = isNodeFilterVisible(item.simulationData);
+          item.isFilteredOut = !isVis;
+
+          if (!isVis) {
+            item.targetGfxAlpha = 0;
+          } else if (hoveredNodeId !== null && focusOnHover) {
             item.targetGfxAlpha = item.active ? 1.0 : 0.12;
           } else {
             item.targetGfxAlpha = 1.0;
@@ -493,11 +609,15 @@ var graph_inline_default = `
         // Title/Label alpha and scaling (Obsidian semantic zoom & fade)
         var zoomK = currentZoom.k || 1.0;
         var baseScale = (1 / scaleFactor) * Math.pow(zoomK, -0.6);
-        var zoomAlpha = Math.max(0, Math.min(1, (zoomK - 0.42) / 0.45));
-        var leafAlpha = Math.max(0, Math.min(1, (zoomK - 0.70) / 0.45));
+        var zoomAlpha = Math.max(0, Math.min(1, (zoomK - 0.50) / 0.35));
+        var leafAlpha = Math.max(0, Math.min(1, (zoomK - 0.70) / 0.35));
 
         for (var i = 0; i < nodeItems.length; i++) {
           var item = nodeItems[i];
+          if (item.isFilteredOut) {
+            item.targetLabelAlpha = 0;
+            continue;
+          }
           var nid = item.simulationData.id;
           var deg = item.degree;
 
@@ -629,27 +749,113 @@ var graph_inline_default = `
         var linkGfx = new PIXI.Graphics();
         linkGfx.eventMode = "none";
         linkContainer.addChild(linkGfx);
+        var baseLinkColor = enableCurvedLinks ? getNodeTypeColor(linkData.source) : colorLineDefault;
+        var baseLinkAlpha = enableCurvedLinks ? 0.25 : 0.6;
         linkItems.push({
           simulationData: linkData,
           gfx: linkGfx,
-          color: colorLineDefault,
-          targetColor: colorLineDefault,
-          alpha: 0.6,
-          currentAlpha: 0.6,
-          targetAlpha: 0.6,
+          baseColor: baseLinkColor,
+          color: baseLinkColor,
+          targetColor: baseLinkColor,
+          alpha: baseLinkAlpha,
+          currentAlpha: baseLinkAlpha,
+          targetAlpha: baseLinkAlpha,
           active: false
         });
       }
 
-      // Drag behavior
+      // Feature 3: Flowing dots along links (max 50, under 900px: max 25)
+      var particles = [];
+      if (enableFlowParticles && simulationLinks.length > 0) {
+        var maxParticles = (window.innerWidth < 900) ? 25 : 45;
+        // Shuffle links slightly so dots are naturally distributed across the network
+        var scoredLinks = simulationLinks.slice().sort(function(a, b) {
+          var scoreA = getNodeDegree(a.source) + getNodeDegree(a.target) + (Math.random() * 4 - 2);
+          var scoreB = getNodeDegree(b.source) + getNodeDegree(b.target) + (Math.random() * 4 - 2);
+          return scoreB - scoreA;
+        });
+        var chosenLinks = scoredLinks.slice(0, maxParticles);
+        for (var pIdx = 0; pIdx < chosenLinks.length; pIdx++) {
+          var pLink = chosenLinks[pIdx];
+          var pColor = getNodeTypeColor(pLink.source) || colorBpText;
+          particles.push({
+            link: pLink,
+            progress: Math.random(),
+            duration: 4200 + Math.random() * 5800,
+            radius: 1.3 + Math.random() * 0.7,
+            color: pColor
+          });
+        }
+      }
+
+      var currentAngle = 0;
+      var lastInteractionTime = 0;
+      var lastTime = performance.now();
+      var linksNeedRedraw = true;
+      var isZooming = false;
+      var zoomEndTimeout = null;
+      var zoomBehavior = null;
+      var isTabHidden = document.hidden;
+      var isOutOfView = false;
+
+      var handleVisibilityChange = function() {
+        isTabHidden = document.hidden;
+      };
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+
+      var observer = null;
+      try {
+        observer = new IntersectionObserver(function(entries) {
+          for (var o = 0; o < entries.length; o++) {
+            if (entries[o].target === container) {
+              isOutOfView = !entries[o].isIntersecting;
+            }
+          }
+        }, { threshold: 0.05 });
+        observer.observe(container);
+      } catch (e) {}
+
+      var resizeObserver = null;
+      try {
+        resizeObserver = new ResizeObserver(function(entries) {
+          for (var rIdx = 0; rIdx < entries.length; rIdx++) {
+            var cr = entries[rIdx].contentRect;
+            if (cr.width > 50 && cr.height > 50) {
+              if (Math.abs(cr.width - width) > 4 || Math.abs(cr.height - height) > 4) {
+                width = Math.round(cr.width);
+                height = Math.round(cr.height);
+                try {
+                  app.renderer.resize(width, height);
+                } catch (err) {}
+                graphWrapper.position.set(width / 2, height / 2);
+                graphWrapper.pivot.set(width / 2, height / 2);
+                if (enableZoom && typeof zoomBehavior !== "undefined" && zoomBehavior) {
+                  zoomBehavior.extent([[0, 0], [width, height]]);
+                }
+                linksNeedRedraw = true;
+              }
+            }
+          }
+        });
+        resizeObserver.observe(container);
+      } catch (e) {}
+
+      // Drag behavior with inverse rotation support
       if (enableDrag) {
         var findSubject = function(event) {
-          var x = (event.x - currentZoom.x) / currentZoom.k;
-          var y = (event.y - currentZoom.y) / currentZoom.k;
+          var zx = (event.x - currentZoom.x) / currentZoom.k;
+          var zy = (event.y - currentZoom.y) / currentZoom.k;
+          var rx = zx - width / 2;
+          var ry = zy - height / 2;
+          var cos = Math.cos(-currentAngle);
+          var sin = Math.sin(-currentAngle);
+          var unrotatedX = rx * cos - ry * sin;
+          var unrotatedY = rx * sin + ry * cos;
           for (var i = 0; i < simulationNodes.length; i++) {
             var n = simulationNodes[i];
-            var dx = x - n.x - width / 2;
-            var dy = y - n.y - height / 2;
+            if (!isNodeFilterVisible(n)) continue;
+            var dx = unrotatedX - n.x;
+            var dy = unrotatedY - n.y;
             if (Math.sqrt(dx * dx + dy * dy) < getNodeRadius(n) + 10) return n;
           }
           return null;
@@ -665,8 +871,14 @@ var graph_inline_default = `
             if (!event.active) sim.alphaTarget(0.8).restart();
             event.subject.fx = event.subject.x;
             event.subject.fy = event.subject.y;
-            var curX = (event.x - currentZoom.x) / currentZoom.k - width / 2;
-            var curY = (event.y - currentZoom.y) / currentZoom.k - height / 2;
+            var zx = (event.x - currentZoom.x) / currentZoom.k;
+            var zy = (event.y - currentZoom.y) / currentZoom.k;
+            var rx = zx - width / 2;
+            var ry = zy - height / 2;
+            var cos = Math.cos(-currentAngle);
+            var sin = Math.sin(-currentAngle);
+            var curX = rx * cos - ry * sin;
+            var curY = rx * sin + ry * cos;
             event.subject.__dragOffset = { x: curX - event.subject.x, y: curY - event.subject.y };
             dragStartTime = Date.now();
             lastDragX = curX;
@@ -676,10 +888,18 @@ var graph_inline_default = `
             nodeVy = 0;
             isDragging = true;
             hoveredNodeId = event.subject.id;
+            lastInteractionTime = performance.now();
+            linksNeedRedraw = true;
           })
           .on("drag", function(event) {
-            var curX = (event.x - currentZoom.x) / currentZoom.k - width / 2;
-            var curY = (event.y - currentZoom.y) / currentZoom.k - height / 2;
+            var zx = (event.x - currentZoom.x) / currentZoom.k;
+            var zy = (event.y - currentZoom.y) / currentZoom.k;
+            var rx = zx - width / 2;
+            var ry = zy - height / 2;
+            var cos = Math.cos(-currentAngle);
+            var sin = Math.sin(-currentAngle);
+            var curX = rx * cos - ry * sin;
+            var curY = rx * sin + ry * cos;
             event.subject.fx = curX - event.subject.__dragOffset.x;
             event.subject.fy = curY - event.subject.__dragOffset.y;
             var now = performance.now();
@@ -689,6 +909,8 @@ var graph_inline_default = `
             lastDragX = curX;
             lastDragY = curY;
             lastDragTime = now;
+            lastInteractionTime = now;
+            linksNeedRedraw = true;
           })
           .on("end", function(event) {
             if (!event.active) sim.alphaTarget(0.2);
@@ -698,6 +920,8 @@ var graph_inline_default = `
             event.subject.fx = null;
             event.subject.fy = null;
             isDragging = false;
+            lastInteractionTime = performance.now();
+            linksNeedRedraw = true;
             setTimeout(function() { if (!isDragging) sim.alphaTarget(0); }, 300);
             updateActiveSet(null);
             updateVisuals();
@@ -719,7 +943,7 @@ var graph_inline_default = `
 
       // Zoom & Pan behavior
       if (enableZoom) {
-        var zoomBehavior = d3.zoom()
+        zoomBehavior = d3.zoom()
           .extent([[0, 0], [width, height]])
           .scaleExtent([0.15, 5.0])
           .wheelDelta(function(event) {
@@ -727,13 +951,50 @@ var graph_inline_default = `
           })
           .on("zoom", function(event) {
             targetZoom = event.transform;
+            isZooming = true;
+            lastInteractionTime = performance.now();
+            clearTimeout(zoomEndTimeout);
+            zoomEndTimeout = setTimeout(function() {
+              isZooming = false;
+              lastInteractionTime = performance.now();
+            }, 250);
           });
-        d3.select(app.canvas).call(zoomBehavior);
+        d3.select(app.canvas).call(zoomBehavior).call(zoomBehavior.transform, initialZoom);
       }
 
       var isStopped = false;
       function onFrame() {
         if (!isStopped) {
+          var now = performance.now();
+          var delta = Math.min(now - lastTime, 100);
+          lastTime = now;
+
+          if (isTabHidden || isOutOfView) {
+            requestAnimationFrame(onFrame);
+            return;
+          }
+
+          // Feature 1: Smooth rotation around center
+          // - Drag: pause completely
+          // - Hover: gentle slow rotation (1/3 speed)
+          // - Idle: full speed
+          if (enableRotate) {
+            var fullSpeed = 0.000020644; // ~5 min / full turn
+            var hoverSpeed = fullSpeed * 0.35; // ~14 min / turn while hovering
+            var rotSpeed;
+            if (isDragging || isZooming) {
+              rotSpeed = 0;
+            } else if (hoveredNodeId !== null) {
+              rotSpeed = hoverSpeed;
+            } else {
+              rotSpeed = fullSpeed;
+            }
+            if (rotSpeed > 0) {
+              currentAngle = (currentAngle + rotSpeed * delta) % (Math.PI * 2);
+              graphWrapper.rotation = currentAngle;
+            }
+          }
+
           // Smooth inertia lerp for zoom & pan in graph view
           var diffK = targetZoom.k - currentZoom.k;
           var diffX = targetZoom.x - currentZoom.x;
@@ -754,16 +1015,25 @@ var graph_inline_default = `
             var item = nodeItems[i];
             item.currentGfxAlpha += (item.targetGfxAlpha - item.currentGfxAlpha) * fadeLerp;
             item.gfx.alpha = item.currentGfxAlpha;
+            item.gfx.visible = item.currentGfxAlpha > 0.005;
             item.currentLabelAlpha += (item.targetLabelAlpha - item.currentLabelAlpha) * fadeLerp;
             item.label.alpha = item.currentLabelAlpha;
+            item.label.visible = item.currentLabelAlpha > 0.005;
+            if (enableRotate) {
+              item.label.rotation = -currentAngle;
+            }
           }
           for (var i = 0; i < linkItems.length; i++) {
             var link = linkItems[i];
+            var prevAlpha = link.currentAlpha;
             link.currentAlpha += (link.targetAlpha - link.currentAlpha) * fadeLerp;
             link.alpha = link.currentAlpha;
-            link.color = link.targetColor || colorLineDefault;
+            link.gfx.visible = link.currentAlpha > 0.005;
+            link.color = link.targetColor || link.baseColor || colorLineDefault;
+            if (Math.abs(link.currentAlpha - prevAlpha) > 0.005) {
+              linksNeedRedraw = true;
+            }
           }
-          var now = performance.now();
           var pulse = (Math.sin(now * 0.0024) + 1) * 0.5; // Smooth 0..1 wave (~2.6s cycle)
 
           for (var i = 0; i < nodeItems.length; i++) {
@@ -780,35 +1050,140 @@ var graph_inline_default = `
                 item.haloGfx.scale.set(haloScale, haloScale);
                 item.haloGfx.alpha = item.currentGfxAlpha * (0.40 + pulse * 0.50);
               }
-              // Place label strictly BELOW node circle with 4px gap (Obsidian alignment)
-              item.label.position.set(posX, posY + item.radius + 4);
+              // Place label BELOW the node circle
+              // Offset = radius + gap, then corrected because label is scaled down
+              var labelScale = 1 / scaleFactor;
+              var labelGap = 5;
+              item.label.position.set(posX, posY + item.radius + labelGap);            }
+          }
+
+          var isSimRunning = sim.alpha() > 0.005 || isDragging;
+          if (isSimRunning) {
+            linksNeedRedraw = true;
+          }
+
+          // Feature 2: Redraw curved links only when node positions move or alpha settles
+          if (linksNeedRedraw || !enableCurvedLinks) {
+            for (var i = 0; i < linkItems.length; i++) {
+              var link = linkItems[i];
+              var simD = link.simulationData;
+              var sx = simD.source.x, sy = simD.source.y;
+              var tx = simD.target.x, ty = simD.target.y;
+              if (sx != null && sy != null && tx != null && ty != null) {
+                link.gfx.clear();
+                var startX = sx + width / 2;
+                var startY = sy + height / 2;
+                var endX = tx + width / 2;
+                var endY = ty + height / 2;
+                link.gfx.moveTo(startX, startY);
+                if (enableCurvedLinks) {
+                  var cp = getLinkControlPoint(startX, startY, endX, endY, simD.source.id, simD.target.id);
+                  link.gfx.quadraticCurveTo(cp.cx, cp.cy, endX, endY);
+                } else {
+                  link.gfx.lineTo(endX, endY);
+                }
+                var isCurrentLink = (simD.source.id === currentKey || simD.target.id === currentKey);
+                var strokeWidth = link.active ? 1.0 : (isCurrentLink ? 0.75 : 0.5);
+                link.gfx.stroke({ alpha: link.alpha, width: strokeWidth, color: link.color });
+              }
+            }
+            if (!isSimRunning) {
+              linksNeedRedraw = false;
             }
           }
-          for (var i = 0; i < linkItems.length; i++) {
-            var link = linkItems[i];
-            var simD = link.simulationData;
-            var sx = simD.source.x, sy = simD.source.y;
-            var tx = simD.target.x, ty = simD.target.y;
-            if (sx != null && sy != null && tx != null && ty != null) {
-              link.gfx.clear();
-              link.gfx.moveTo(sx + width / 2, sy + height / 2);
-              link.gfx.lineTo(tx + width / 2, ty + height / 2);
-              var isCurrentLink = (simD.source.id === currentKey || simD.target.id === currentKey);
-              var strokeWidth = link.active ? 1.0 : (isCurrentLink ? 0.75 : 0.5);
-              link.gfx.stroke({ alpha: link.alpha, width: strokeWidth, color: link.color });
+
+          // Feature 3: Flowing dots along curved lines
+          if (enableFlowParticles && particles.length > 0) {
+            particleGfx.clear();
+            for (var p = 0; p < particles.length; p++) {
+              var pt = particles[p];
+              pt.progress = (pt.progress + delta / pt.duration) % 1.0;
+              var simL = pt.link;
+              // Skip particles on filtered-out links
+              if (!isNodeFilterVisible(simL.source) || !isNodeFilterVisible(simL.target)) continue;
+              var sx = simL.source.x, sy = simL.source.y;
+              var tx = simL.target.x, ty = simL.target.y;
+              if (sx != null && sy != null && tx != null && ty != null) {
+                var pX1 = sx + width / 2;
+                var pY1 = sy + height / 2;
+                var pX2 = tx + width / 2;
+                var pY2 = ty + height / 2;
+                var prog = pt.progress;
+                var invP = 1.0 - prog;
+                var dotX, dotY;
+                if (enableCurvedLinks) {
+                  var pCp = getLinkControlPoint(pX1, pY1, pX2, pY2, simL.source.id, simL.target.id);
+                  dotX = invP * invP * pX1 + 2 * invP * prog * pCp.cx + prog * prog * pX2;
+                  dotY = invP * invP * pY1 + 2 * invP * prog * pCp.cy + prog * prog * pY2;
+                } else {
+                  dotX = pX1 + (pX2 - pX1) * prog;
+                  dotY = pY1 + (pY2 - pY1) * prog;
+                }
+                var dotAlpha = 0.8;
+                if (prog < 0.1) {
+                  dotAlpha = 0.8 * (prog / 0.1);
+                } else if (prog > 0.9) {
+                  dotAlpha = 0.8 * ((1.0 - prog) / 0.1);
+                }
+                particleGfx.circle(dotX, dotY, 1.8);
+                particleGfx.fill({ color: pt.color, alpha: dotAlpha });
+              }
             }
           }
+
           requestAnimationFrame(onFrame);
         }
       }
+
+      var handleGraphFilter = function(e) {
+        var tags = e.detail?.tags;
+        if (Array.isArray(tags)) {
+          activeFilterTags = new Set(tags.map(function(t) { return String(t).toLowerCase(); }));
+          window.__quartzActiveFilterTags = activeFilterTags;
+        } else {
+          activeFilterTags = null;
+          window.__quartzActiveFilterTags = null;
+        }
+        updateVisuals();
+        linksNeedRedraw = true;
+      };
+      document.addEventListener("quartz-filter-tags", handleGraphFilter);
 
       sim.restart();
       updateVisuals();
       onFrame();
 
+      // Homepage intro animation: hide sidebar + headbar, reveal after graph settles
+      var isHomepage = (Fu(we()) === "index");
+      if (isHomepage && enableRotate && !window.__graphIntroPlayed) {
+        window.__graphIntroPlayed = true;
+        var body = document.body;
+        var prefersReducedMotion = false;
+        try { prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){}
+        if (!prefersReducedMotion) {
+          body.classList.add("graph-intro-active");
+          setTimeout(function() {
+            body.classList.remove("graph-intro-active");
+            body.classList.add("graph-intro-done");
+            // Remove done class after transition ends (cleanup)
+            setTimeout(function() {
+              body.classList.remove("graph-intro-done");
+            }, 1200);
+          }, 3500);
+        }
+      }
+
       return function cleanup() {
         isStopped = true;
         sim.stop();
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
+        document.removeEventListener("quartz-filter-tags", handleGraphFilter);
+        if (observer) {
+          try { observer.disconnect(); } catch (e) {}
+        }
+        if (resizeObserver) {
+          try { resizeObserver.disconnect(); } catch (e) {}
+        }
         try { app.destroy(true); } catch (e) {}
       };
     }

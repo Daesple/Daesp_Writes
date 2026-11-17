@@ -1,0 +1,23 @@
+{
+  "name": "article-list",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./components": "./dist/components/index.js"
+  },
+  "quartz": {
+    "name": "article-list",
+    "displayName": "Article List",
+    "category": "component",
+    "version": "1.0.0",
+    "components": {
+      "ArticleList": {
+        "displayName": "Article List",
+        "defaultPosition": "left",
+        "defaultPriority": 10
+      }
+    }
+  }
+}

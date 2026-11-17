@@ -32,6 +32,11 @@ export const DefaultFrame: PageFrame = {
             </div>
           </header>
         )}
+        <div class="left sidebar">
+          {left.map((BodyComponent) => (
+            <BodyComponent {...componentData} />
+          ))}
+        </div>
         <div class="center">
           <div class="page-header">
             <div class="popover-hint">
