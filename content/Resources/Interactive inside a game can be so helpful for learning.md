@@ -10,7 +10,7 @@ I know that education through Game is not a new thing, it's been around for a fe
 
 The important part is not that a game has points, badges, levels. Those are only surface-level game elements. What matters is whether the player can meaningfully interact with the system and learn from the consequences of their choices.
 
-The other day, i was daydreaming about the fantasy future like in anime mana, where people could play a immersive virtual game that feel like going to another world. I think with AI, that might not be a fantasy anymore (?) (I'm not say we could do that, infact it's more likely to we can not, because it relate to brain connection, etc... but at least, we getting close to it). But if that day come, what will a "game" mean? it would have to be so much more, it's much be no limit. The only limit of a game is just the limit imagination of the game maker. So i wonder how game design in that imaginative future would look like, and seeking a way to get closure to it (i hope).
+The other day, i was daydreaming about the fantasy future like in anime mana, where people could play a immersive virtual game that feel like going to another world. I think with AI, that might not be a fantasy anymore (?) (I'm not say we could do that, infact it's more likely to we can not, because it relate to brain connection, etc... but at least, we getting close to it). But if that day come, what will a "game" mean? it would have to be so much more, it's much be no limit. The only limit of a game is just the limit imagination of the game maker. So i wonder how game design in that imaginative future would look like, and seeking a way to get closer to it (i hope).
 
 ---
 
