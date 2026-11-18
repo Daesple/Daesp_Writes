@@ -2,7 +2,7 @@ tags: [[Mindset]], [[Learning]]
 
 For all the perfectionists out there: you do not need to know everything before you can start doing something.
 
-counterintuitively, i would say (tbh, it's not mine, i'm steel it :3) that by doing it you will know and understand it (by the time)
+counterintuitively, i would say (tbh, it's not mine, i'm steal it :3) that by doing it you will know and understand it (by the time)
 
 When we learn a lot but rarely apply it, we form an illusion of knowing. Learning itself doesn't guarantee understanding. We may become fluent with the material, be able to recognize terms, repeat explanations, or follow a lecture - but fluency is not the same as mastery.
 
